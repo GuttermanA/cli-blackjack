@@ -9,7 +9,7 @@ public class Player {
 
 
     public final String name;
-    public List<Card>  cards = new ArrayList<>();
+    public List<List>  hands = new ArrayList<>();
     public int cardsValue = 0;
     public double bet = 0;
     public double winnings = 0;
@@ -22,6 +22,7 @@ public class Player {
     public Player(String name, double winnings) {
         this.name = name;
         this.winnings += winnings;
+        hands.add(new ArrayList<Card>());
     }
 
     public Player(double winnings) {
@@ -31,22 +32,22 @@ public class Player {
 
     public void addCard(Card card) {
         cardsValue += card.value;
-        cards.add(card);
+//        cards.add(card);
     }
 
     public boolean checkBlackJack() {
         return cardsValue == 21;
     }
 
-    public String cardsToString() {
-        StringBuilder sb = new StringBuilder();
-        for(Card card : cards) {
-            sb.append("---");
-            sb.append(System.lineSeparator());
-            sb.append("|" + card.toString() + "|");
-            sb.append(System.lineSeparator());
-            sb.append("---  ");
-        }
-        return sb.toString();
-    }
+//    public String cardsToString() {
+//        StringBuilder sb = new StringBuilder();
+//        for(Card card : cards) {
+//            sb.append("---");
+//            sb.append(System.lineSeparator());
+//            sb.append("|" + card.toString() + "|");
+//            sb.append(System.lineSeparator());
+//            sb.append("---  ");
+//        }
+//        return sb.toString();
+//    }
 }

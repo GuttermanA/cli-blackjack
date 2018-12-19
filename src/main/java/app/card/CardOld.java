@@ -1,30 +1,34 @@
 package app.card;
 
-public class Card {
+public class CardOld {
     public static final int[] values = {2,3,4,5,6,7,8,9,10};
     public static final String[] suits = {"SPADES","HEARTS", "DIAMONDS", "CLUBS"};
-    public static final String[] royals = {"J", "Q","K"};
+    public static final String[] royals = {"ACE", "JACK", "QUEEN","KING"};
 
     public final int value;
     public final int unicodeSuit;
     public final String suit;
+    public final String royal;
 
-//    public Card() {
-//        this.value = 0;
-//        this.unicodeSuit = 0;
-//        this.suit = null;
-//    }
+    public CardOld(){
+        this.value = 0;
+        this.unicodeSuit = 0;
+        this.suit = null;
+        this.royal = null;
+    }
 
-    public Card(int value, String suit) {
+    public CardOld(int value, String suit) {
         this.value = value;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
+        this.royal = null;
     }
 
-    public Card(String suit) {
-        this.value = 0;
+    public CardOld(int value, String suit, String royal) {
+        this.value = value;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
+        this.royal = royal;
     }
 
 
@@ -46,12 +50,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return String.valueOf(Character.toChars(this.unicodeSuit)) + this.value;
-//        return "Card{" +
-//                "value=" + value +
-//                ", unicodeSuit=" + unicodeSuit +
-//                ", suit='" + suit + '\'' +
-//                ", royal='" + royal + '\'' +
-//                '}';
+        String value = this.royal != null ? royal : Integer.toString(this.value);
+        return String.valueOf(Character.toChars(this.unicodeSuit)) + value;
     }
 }

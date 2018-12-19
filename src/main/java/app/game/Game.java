@@ -47,18 +47,18 @@ public class Game {
 
         }
     }
-
-    public void dealOpeningCards() {
-        for(int i= 0; i < 3; i++) {
-            for(int j = 0; i < (players.length * 2) + 2; j++) {
-                if(i == 0) {
-                    dealerCards.add(deck.deal());
-                } else {
-                    players[i - 1].cards.add(deck.deal());
-                }
-            }
-        }
-
-    }
+//
+//    public void dealOpeningCards() {
+//        for(int i= 0; i < 3; i++) {
+//            for(int j = 0; i < (players.length * 2) + 2; j++) {
+//                if(i == 0) {
+//                    dealerCards.add(deck.deal());
+//                } else {
+//                    players[i - 1].cards.add(deck.deal());
+//                }
+//            }
+//        }
+//
+//    }
 
 }

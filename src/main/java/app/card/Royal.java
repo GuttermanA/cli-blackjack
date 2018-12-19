@@ -1,18 +1,16 @@
 package app.card;
 
-public class Ace extends Card {
-    public int[] value = {1,11};
-    public String type = "A";
+public class Royal extends Card {
+    public final String type;
+    public final int value = 10;
 
-    public Ace(String suit) {
+    public Royal(String suit, String type) {
         super(suit);
+        this.type = type;
     }
-
-
 
     @Override
     public String toString() {
         return String.valueOf(Character.toChars(this.unicodeSuit)) + this.type;
     }
-
 }

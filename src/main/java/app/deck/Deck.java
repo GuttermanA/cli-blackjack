@@ -1,6 +1,8 @@
 package app.deck;
 
+import app.card.Ace;
 import app.card.Card;
+import app.card.Royal;
 
 import java.util.*;
 
@@ -16,18 +18,26 @@ public class Deck extends ArrayDeque {
 
     private List<Card> generateCards(int numDecks) {
         List<Card> deckArray = new ArrayList<>();
+
         for(int i = 0; i < numDecks; i++) {
+
+            //Add number cards
             for(Integer value : Card.values) {
                 for(String suit : Card.suits) {
                     deckArray.add(new Card(value, suit));
                 }
             }
 
-            for(String royal : Card.royals) {
-                int value = royal.equals("ACE") ? 1 : 10;
+            //Add royal cards
+            for(String type : Card.royals) {
                 for(String suit : Card.suits) {
-                    deckArray.add(new Card(value, suit, royal));
+                    deckArray.add(new Royal(suit, type));
                 }
+            }
+
+            //Add aces
+            for(String suit : Card.suits) {
+                deckArray.add(new Ace(suit));
             }
         }
 
@@ -46,20 +56,15 @@ public class Deck extends ArrayDeque {
 
     public void print() {
         Iterator iterator = this.iterator();
-//        int counter = 1;
+        int counter = 1;
 
         while(iterator.hasNext()) {
 
-//            System.out.println(counter);
+            System.out.println(counter);
             System.out.println(iterator.next().toString());
-//            counter++;
+            counter++;
         }
 
-//
-//        for(Object card : this) {
-//            System.out.println(counter);
-//            counter++;
-//        }
     }
 
 }
