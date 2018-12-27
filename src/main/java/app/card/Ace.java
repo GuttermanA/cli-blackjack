@@ -1,6 +1,6 @@
 package app.card;
 
-public class Ace extends Card {
+public class Ace extends Royal {
     public int[] value = {1,11};
     public String type = "A";
 
@@ -8,11 +8,12 @@ public class Ace extends Card {
         super(suit);
     }
 
+    public int getHighValue() {
+        return this.value[1];
+    }
 
-
-    @Override
-    public String toString() {
-        return String.valueOf(Character.toChars(this.unicodeSuit)) + this.type;
+    public int getLowValue() {
+        return this.value[0];
     }
 
 }

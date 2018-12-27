@@ -1,42 +1,28 @@
 package app.player;
 
-import app.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class HandContainer extends ArrayList {
+public class HandContainer {
 
-
-    public int currentHand = 0;
+    private int currentHand = 0;
+    public List<Hand> hands = new ArrayList<>();
 
     public HandContainer() {
-        this.add(new ArrayList< Card >());
+        this.hands.add(new Hand());
     }
 
-    public List<Card> primary() {
-        return (List<Card>) this.get(0);
+    public Hand getCurrentHand() {
+        return this.hands.get(currentHand);
     }
 
-
+    public void setCurrentHand(int currentHand) {
+        if(currentHand <= hands.size()) {
+            this.currentHand = currentHand;
+        }
+    }
 
 
 }
 
-class Hand extends ArrayList {
-    public int value = 0;
 
-    public void addCard(Card card) {
-
-        this.value += card.value;
-        this.add(card);
-    }
-
-    public boolean checkAce(Card card) {
-        return card.suit.equals("ACE");
-    }
-
-//    public int aceValue(Card card) {
-//
-//    }
-}

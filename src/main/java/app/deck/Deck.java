@@ -12,35 +12,34 @@ public class Deck extends ArrayDeque {
         this.addAll(generateCards(numDecks));
     }
 
-    public Deck(){
+    public Deck() {
         this.addAll(generateCards(1));
     }
 
     private List<Card> generateCards(int numDecks) {
         List<Card> deckArray = new ArrayList<>();
 
-        for(int i = 0; i < numDecks; i++) {
+        for (int i = 0; i < numDecks; i++) {
 
             //Add number cards
-            for(Integer value : Card.values) {
-                for(String suit : Card.suits) {
+            for (Integer value : Card.values) {
+                for (String suit : Card.suits) {
                     deckArray.add(new Card(value, suit));
                 }
             }
 
             //Add royal cards
-            for(String type : Card.royals) {
-                for(String suit : Card.suits) {
+            for (String type : Card.royals) {
+                for (String suit : Card.suits) {
                     deckArray.add(new Royal(suit, type));
                 }
             }
 
             //Add aces
-            for(String suit : Card.suits) {
+            for (String suit : Card.suits) {
                 deckArray.add(new Ace(suit));
             }
         }
-
 
 
         Collections.shuffle(deckArray);
@@ -48,11 +47,15 @@ public class Deck extends ArrayDeque {
         return deckArray;
     }
 
-    public Card deal() {
+    public Card dealFaceUp() {
         return (Card) this.removeFirst();
     }
 
-
+    public Card dealFaceDown() {
+        Card card = (Card) this.removeFirst();
+        card.setHidden(true);
+        return card;
+    }
 
     public void print() {
         Iterator iterator = this.iterator();

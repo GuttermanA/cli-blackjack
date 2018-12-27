@@ -3,17 +3,19 @@ package app.card;
 public class Card {
     public static final int[] values = {2,3,4,5,6,7,8,9,10};
     public static final String[] suits = {"SPADES","HEARTS", "DIAMONDS", "CLUBS"};
+    public static final int unicodeCardBack = 0x1F0A0;
+
     public static final String[] royals = {"J", "Q","K"};
 
     public final int value;
-    public final int unicodeSuit;
-    public final String suit;
 
-//    public Card() {
-//        this.value = 0;
-//        this.unicodeSuit = 0;
-//        this.suit = null;
-//    }
+
+
+    protected final int unicodeSuit;
+    protected final String suit;
+
+    protected boolean hidden = false;
+
 
     public Card(int value, String suit) {
         this.value = value;
@@ -40,18 +42,33 @@ public class Card {
         return 0x0000FFFD;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public int getUnicodeSuit() {
+        return this.hidden ? unicodeCardBack : this.unicodeSuit;
+    }
+
+    public String getSuit() {
+        return suit;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+
     public void print() {
         System.out.println(toString());
     }
 
     @Override
     public String toString() {
-        return String.valueOf(Character.toChars(this.unicodeSuit)) + this.value;
-//        return "Card{" +
-//                "value=" + value +
-//                ", unicodeSuit=" + unicodeSuit +
-//                ", suit='" + suit + '\'' +
-//                ", royal='" + royal + '\'' +
-//                '}';
+        return String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.hidden ? "" : this.value);
     }
 }
