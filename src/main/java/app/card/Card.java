@@ -24,7 +24,7 @@ public class Card {
     }
 
     public Card(String suit) {
-        this.value = 0;
+        this.value = 10;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
     }
@@ -40,6 +40,10 @@ public class Card {
         if(suit.equals("CLUBS")) return 0x2663;
 
         return 0x0000FFFD;
+    }
+
+    public boolean isAce() {
+        return this instanceof Ace;
     }
 
     public int getValue() {
@@ -69,6 +73,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.hidden ? "" : this.value);
+        return String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.hidden ? "" : this.getValue());
     }
 }

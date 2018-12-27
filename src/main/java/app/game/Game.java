@@ -8,6 +8,7 @@ public class Game {
 
 
     public final Player[] players;
+    public int activePlayer = 0;
     public final Deck deck;
     public Hand dealer = new Hand();
     public final double minBet = 1;
@@ -44,7 +45,7 @@ public class Game {
     }
 
     public void dealOpeningCards() {
-        for(int i= 0; i < 3; i++) {
+        for(int i= 0; i < 2; i++) {
             if(i == 0 ) {
                 dealer.cards.add(deck.dealFaceUp());
             } else {
@@ -59,7 +60,17 @@ public class Game {
     }
 
     public void printDealerHand() {
+        System.out.println(dealer.toString());
+    }
 
+    public void printActivePlayerHand() {
+        System.out.println(players[activePlayer].hands.getCurrentHand().toString());
+    }
+
+    public void printTurn() {
+        printDealerHand();
+        System.out.println("------------------------------------");
+        printActivePlayerHand();
     }
 
 }
