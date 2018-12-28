@@ -23,9 +23,10 @@ public class Hand {
         this.setValue();
     }
 
-    public void addCard(Card card) {
+    public Card addCard(Card card) {
         this.cards.add(card);
         this.setValue();
+        return card;
     }
 
     private void setValue() {

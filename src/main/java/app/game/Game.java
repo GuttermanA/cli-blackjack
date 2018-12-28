@@ -1,40 +1,41 @@
 package app.game;
 
-import app.deck.Deck;
+import app.dealer.Dealer;
+import app.dealer.Deck;
 import app.player.Hand;
 import app.player.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
 
-    public final Player[] players;
+    public final List<Player> players;
     public int activePlayer = 0;
-    public final Deck deck;
-    public Hand dealer = new Hand();
-    public final double minBet = 1;
+    public Dealer dealer;
+//    public final double minBet = 1;
 
-    public Game(Player[] players, int numDecks) {
+    public Game(List<Player> players, int numDecks) {
         this.players = players;
-        this.deck = new Deck(numDecks);
-//        this.dealer = new Dealer();
+        this.dealer = new Dealer(players, numDecks);
     }
 
-    public Game(Player[] players) {
+    public Game(List<Player> players) {
         this.players = players;
-        this.deck = new Deck();
-//        this.dealer = new Dealer();
+        this.dealer = new Dealer(players);
     }
 
     public Game() {
-        this.players = new Player[] {new Player()};
-        this.deck = new Deck();
-//        this.dealer = new Dealer();
+        this.players = new ArrayList<Player>();
+        players.add(new Player());
+        this.dealer = new Dealer(this.players);
     }
 
     public Game(int numDecks) {
-        this.players = new Player[] {new Player()};
-        this.deck = new Deck(numDecks);
-//        this.dealer = new Dealer();
+        this.players = new ArrayList<Player>();
+        players.add(new Player());
+        this.dealer = new Dealer(this.players, numDecks);
     }
 
     public void turn() {
@@ -44,31 +45,18 @@ public class Game {
         }
     }
 
-    public void dealOpeningCards() {
-        for(int i= 0; i < 2; i++) {
-            if(i == 0 ) {
-                dealer.cards.add(deck.dealFaceUp());
-            } else {
-                dealer.cards.add(deck.dealFaceDown());
-            }
-
-            for(Player player : players) {
-                player.hands.getCurrentHand().addCard(deck.dealFaceUp());
-            }
-        }
-
+    public void start() {
+        dealer.dealOpeningCards();
+        printTurn();
     }
 
-    public void printDealerHand() {
-        System.out.println(dealer.toString());
-    }
 
     public void printActivePlayerHand() {
-        System.out.println(players[activePlayer].hands.getCurrentHand().toString());
+        System.out.println(players.get(activePlayer).toString());
     }
 
     public void printTurn() {
-        printDealerHand();
+        dealer.printOpeningHand();
         System.out.println("------------------------------------");
         printActivePlayerHand();
     }

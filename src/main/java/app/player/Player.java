@@ -12,7 +12,7 @@ public class Player {
     public double winnings = 0;
 
     public Player() {
-        this.name = "DEFAULT";
+        this.name = "The Man with No Name";
         this.winnings += 100;
         this.hands = new HandContainer();
     }
@@ -46,5 +46,14 @@ public class Player {
 
     public double getBet() {
         return this.bet;
+    }
+
+    @Override
+    public String toString() {
+        return hands.getCurrentHand().toString();
+    }
+
+    public void printHand() {
+        System.out.println(this.name + "has:" + System.lineSeparator() + this.toString());
     }
 }

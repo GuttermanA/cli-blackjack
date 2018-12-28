@@ -73,6 +73,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.hidden ? "" : this.getValue());
+        return this.hidden ? "" : String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.getValue());
     }
 }
