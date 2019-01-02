@@ -29,12 +29,16 @@ public class Hand {
         return card;
     }
 
+    public Card getCard(int index) {
+        return this.cards.get(index);
+    }
+
     private void setValue() {
         this.value = 0;
         for(Card card : this.cards) {
-            if(card.isHidden()) {
-                continue;
-            }
+//            if(card.isHidden()) {
+//                continue;
+//            }
             if(card instanceof Ace) {
                 this.addAce();
                 Ace ace = (Ace) card;
@@ -70,6 +74,14 @@ public class Hand {
         return this.value == 21;
     }
 
+    public boolean isCardHidden() {
+        for(Card card : cards) {
+            if(card.isHidden()) return true;
+        }
+
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -79,7 +91,9 @@ public class Hand {
         }
         sb.append(System.lineSeparator());
 
-        if(this.getNumAces() > 0) {
+        if (isCardHidden()) {
+            sb.append(this.hiddenCardMessage());
+        } else if(this.getNumAces() > 0) {
             sb.append(this.withAceMessage());
         } else {
             sb.append(this.withoutAceMessage());
@@ -94,6 +108,10 @@ public class Hand {
 
     public String withoutAceMessage() {
         return "The value of the hand is " + this.getValue() + ".";
+    }
+
+    public String hiddenCardMessage() {
+        return "The current value of the hand is hidden.";
     }
 
 

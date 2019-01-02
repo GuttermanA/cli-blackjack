@@ -1,5 +1,6 @@
 package app.game;
 
+import app.card.Ace;
 import app.dealer.Dealer;
 import app.dealer.Deck;
 import app.player.Hand;
@@ -7,6 +8,7 @@ import app.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
 
@@ -14,6 +16,7 @@ public class Game {
     public final List<Player> players;
     public int activePlayer = 0;
     public Dealer dealer;
+    public Scanner sc = new Scanner(System.in);
 //    public final double minBet = 1;
 
     public Game(List<Player> players, int numDecks) {
@@ -38,16 +41,22 @@ public class Game {
         this.dealer = new Dealer(this.players, numDecks);
     }
 
-    public void turn() {
 
-        for(Player player : players) {
-
-        }
-    }
 
     public void start() {
         dealer.dealOpeningCards();
         printTurn();
+
+        for(int i = 0; i < players.size(); i++) {
+            new Turn(i, players.get(i), dealer, sc);
+        }
+
+//        dealer.checkHiddenBlackjack();
+    }
+
+    public void end() {
+        System.out.println("Thanks for playing!");
+        System.exit(0);
     }
 
 

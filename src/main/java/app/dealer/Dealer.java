@@ -1,5 +1,6 @@
 package app.dealer;
 
+import app.card.Ace;
 import app.card.Card;
 import app.player.Hand;
 import app.player.Player;
@@ -51,10 +52,34 @@ public class Dealer {
         return card;
     }
 
+    public Card revealDownCard() {
+        Card card = this.hand.getCard(1);
+        card.setHidden(false);
+        return card;
+    }
+
+    public boolean checkHiddenBlackjack() {
+        boolean result =  false;
+        if(upCard instanceof Ace) {
+            //ask for insurance
+            result = hand.blackJack();
+        }
+
+        return result;
+    }
+
     public void play() {
         downCard.setHidden(false);
+        printHand();
         while(this.hand.getValue() <=16) {
             this.hand.addCard(dealFaceUp());
+            printHand();
+        }
+
+        if(this.hand.getValue() > 21) {
+            printBust();
+        } else {
+            printStand();
         }
     }
 
@@ -68,11 +93,13 @@ public class Dealer {
     }
 
     public void printStand() {
-
+//        printHand();
+        System.out.println("The dealer stood.");
     }
 
     public void printBust() {
-
+//        printHand();
+        System.out.println("The dealer busted!");
     }
 
     public void printOpeningHand() {
