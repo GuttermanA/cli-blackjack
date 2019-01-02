@@ -48,6 +48,19 @@ public class Player {
         return this.bet;
     }
 
+    public void addCard(Card card) {
+        hands.getCurrentHand().addCard(card);
+    }
+
+    public void split() {
+        Card firstCard = hands.getCurrentHand().cards.get(0);
+        Card secondCard = hands.getCurrentHand().cards.get(1);
+        if(firstCard.value == secondCard.value) {
+            hands.getCurrentHand().cards.remove(secondCard);
+
+        }
+    }
+
     @Override
     public String toString() {
         return hands.getCurrentHand().toString();

@@ -1,5 +1,7 @@
 package app.card;
 
+import java.util.Objects;
+
 public class Royal extends Card {
     public final String type;
     public final int value = 10;
@@ -21,5 +23,19 @@ public class Royal extends Card {
     @Override
     public String toString() {
         return String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.isHidden() ? "" : this.getType());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(!(o instanceof Royal)) return false;
+        Royal card = (Royal) o;
+
+        return this.value == card.value && this.unicodeSuit == card.unicodeSuit && Objects.equals(this.type, card.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, unicodeSuit, suit, type);
     }
 }

@@ -1,7 +1,6 @@
 package app.game;
 
 import app.dealer.Dealer;
-import app.player.Hand;
 import app.player.Player;
 
 import java.util.Arrays;
@@ -15,6 +14,7 @@ public class Turn {
     //If not, continue and get cards
 
     public static final String[] actions = { "h", "st", "sp", "d"};
+    public static final String actionMessaage = "Please stand, hit, split or double:";
 
     public int turnNum;
 
@@ -53,14 +53,28 @@ public class Turn {
 //    }
 
     public void activePlayerAct() {
-        System.out.println(System.lineSeparator() + "Please stand, hold, split or double:");
+        System.out.println(System.lineSeparator() + actionMessaage);
         while(checkInput()) {
-            System.out.println("Please stand, hold, split, or double");
+            System.out.println(actionMessaage);
         }
+
+
+    }
+
+    public void hit () {
+        activePlayer.addCard(dealer.dealFaceUp());
+    }
+
+    public void stand() {
+
+    }
+
+    public void split() {
+
     }
 
     public boolean checkInput() {
-        boolean result =  true;
+        boolean result = true;
         if(Arrays.asList(actions).contains(playerInput.nextLine().toLowerCase()))
             result = false;
 

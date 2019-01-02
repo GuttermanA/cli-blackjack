@@ -1,5 +1,7 @@
 package app.card;
 
+import java.util.Objects;
+
 public class Card {
     public static final int[] values = {2,3,4,5,6,7,8,9,10};
     public static final String[] suits = {"SPADES","HEARTS", "DIAMONDS", "CLUBS"};
@@ -9,6 +11,8 @@ public class Card {
 
     public final int value;
 
+    public static int idCounter = 0;
+    public final int id;
 
 
     protected final int unicodeSuit;
@@ -18,12 +22,14 @@ public class Card {
 
 
     public Card(int value, String suit) {
+        this.id = ++idCounter;
         this.value = value;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
     }
 
     public Card(String suit) {
+        this.id = ++idCounter;
         this.value = 10;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
@@ -74,5 +80,19 @@ public class Card {
     @Override
     public String toString() {
         return this.hidden ? "" : String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.getValue());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) return true;
+        if(!(o instanceof Card)) return false;
+        Card card = (Card) o;
+
+        return this.value == card.value && this.unicodeSuit == card.unicodeSuit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, unicodeSuit, suit);
     }
 }
