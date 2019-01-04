@@ -1,9 +1,7 @@
 package app.game;
 
-import app.card.Ace;
 import app.dealer.Dealer;
-import app.dealer.Deck;
-import app.player.Hand;
+import app.error.HandException;
 import app.player.Player;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class Game {
 
 
 
-    public void start() {
+    public void start() throws HandException {
         dealer.dealOpeningCards();
         printTurn();
 

@@ -88,7 +88,7 @@ public class Card {
         if(!(o instanceof Card)) return false;
         Card card = (Card) o;
 
-        return this.value == card.value && this.unicodeSuit == card.unicodeSuit;
+        return this.value == card.value;
     }
 
     @Override

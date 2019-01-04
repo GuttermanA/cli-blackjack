@@ -31,7 +31,7 @@ public class Royal extends Card {
         if(!(o instanceof Royal)) return false;
         Royal card = (Royal) o;
 
-        return this.value == card.value && this.unicodeSuit == card.unicodeSuit && Objects.equals(this.type, card.type);
+        return this.unicodeSuit == card.unicodeSuit && Objects.equals(this.type, card.type);
     }
 
     @Override

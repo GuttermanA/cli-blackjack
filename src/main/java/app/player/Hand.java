@@ -81,6 +81,10 @@ public class Hand {
         return this.value == 21;
     }
 
+    public int numCards() {
+        return cards.size();
+    }
+
     public boolean isCardHidden() {
         for(Card card : cards) {
             if(card.isHidden()) return true;

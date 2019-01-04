@@ -55,6 +55,10 @@ public class Player {
         this.hands.setCurrentHand(index);
     }
 
+    public Hand getCurrentHand() {
+        return this.hands.getCurrentHand();
+    }
+
     public double getBet() {
         return this.bet;
     }
@@ -82,12 +86,14 @@ public class Player {
         addCard(card);
     }
 
+    public void printHand() {
+        System.out.println(this.name + "has:" + System.lineSeparator() + this.toString());
+    }
+
     @Override
     public String toString() {
         return hands.getCurrentHand().toString();
     }
 
-    public void printHand() {
-        System.out.println(this.name + "has:" + System.lineSeparator() + this.toString());
-    }
+
 }
