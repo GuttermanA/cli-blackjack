@@ -1,6 +1,9 @@
 package app.player;
 
 import app.card.Card;
+import app.error.HandException;
+
+import java.util.List;
 
 public class Player {
 
@@ -44,6 +47,14 @@ public class Player {
         this.winnings -= bet;
     }
 
+    public List<Hand> getHands() {
+        return this.hands.getHands();
+    }
+
+    public void setCurrentHand(int index) {
+        this.hands.setCurrentHand(index);
+    }
+
     public double getBet() {
         return this.bet;
     }
@@ -53,12 +64,22 @@ public class Player {
     }
 
     public void split() {
+        try {
+            hands.getCurrentHand().canSplit();
+        } catch (HandException ex) {
+            ex.printStackTrace();
+        }
         Card firstCard = hands.getCurrentHand().cards.get(0);
         Card secondCard = hands.getCurrentHand().cards.get(1);
         if(firstCard.value == secondCard.value) {
+            this.hands.addHand(secondCard);
             hands.getCurrentHand().cards.remove(secondCard);
-
         }
+    }
+
+    public void doubleDown(Card card) {
+        this.bet *= 2;
+        addCard(card);
     }
 
     @Override

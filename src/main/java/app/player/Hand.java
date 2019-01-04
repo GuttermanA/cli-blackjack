@@ -2,6 +2,7 @@ package app.player;
 
 import app.card.Ace;
 import app.card.Card;
+import app.error.HandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,12 @@ public class Hand {
 
     public Hand(List<Card> cards) {
         this.cards = cards;
+        this.setValue();
+    }
+
+    public Hand(Card card) {
+        this.cards = new ArrayList<>();
+        this.cards.add(card);
         this.setValue();
     }
 
@@ -82,6 +89,12 @@ public class Hand {
         return false;
     }
 
+    public boolean canSplit() throws HandException {
+        if(cards.size() > 2) throw new HandException("Split can only occur when 2 cards are in hand");
+
+        return cards.get(0).equals(cards.get(1));
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -116,3 +129,4 @@ public class Hand {
 
 
 }
+
