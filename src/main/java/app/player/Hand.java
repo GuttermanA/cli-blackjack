@@ -50,9 +50,9 @@ public class Hand {
                 this.addAce();
                 Ace ace = (Ace) card;
                 if(this.value + ace.getHighValue() > 21) {
-                    this.value += ace.getLowValue();
+                    this.value += 1;
                 } else {
-                    this.value += ace.getHighValue();
+                    this.value += 11;
                 }
             } else {
                 this.value += card.value;
@@ -77,9 +77,11 @@ public class Hand {
         return this.value - (10 + numAces);
     }
 
-    public boolean blackJack() {
-        return this.value == 21;
+    public boolean checkBlackJack() {
+        return this.value == 21 && this.cards.size() == 2;
     }
+
+    public boolean checkBust() { return this.value > 21; }
 
     public int numCards() {
         return cards.size();
@@ -97,6 +99,18 @@ public class Hand {
         if(cards.size() > 2) throw new HandException("Split can only occur when 2 cards are in hand");
 
         return cards.get(0).equals(cards.get(1));
+    }
+
+    public String withAceMessage() {
+        return "The value of the hand is " + this.getLowAceValue() + " or " + this.getValue() + ".";
+    }
+
+    public String withoutAceMessage() {
+        return "The value of the hand is " + this.getValue() + ".";
+    }
+
+    public String hiddenCardMessage() {
+        return "The current value of the hand is hidden.";
     }
 
     @Override
@@ -119,17 +133,7 @@ public class Hand {
         return sb.toString().trim();
     }
 
-    public String withAceMessage() {
-        return "The value of the hand is " + this.getLowAceValue() + " or " + this.getValue() + ".";
-    }
 
-    public String withoutAceMessage() {
-        return "The value of the hand is " + this.getValue() + ".";
-    }
-
-    public String hiddenCardMessage() {
-        return "The current value of the hand is hidden.";
-    }
 
 
 }

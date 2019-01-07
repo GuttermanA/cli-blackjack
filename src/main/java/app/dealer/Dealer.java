@@ -62,7 +62,7 @@ public class Dealer {
         boolean result =  false;
         if(upCard instanceof Ace) {
             //ask for insurance
-            result = hand.blackJack();
+            result = hand.checkBlackJack();
         }
 
         return result;
@@ -70,7 +70,9 @@ public class Dealer {
 
     public void play() {
         downCard.setHidden(false);
+        System.out.println( System.lineSeparator() + "The dealers hand is: ");
         printHand();
+
         while(this.hand.getValue() <=16) {
             this.hand.addCard(dealFaceUp());
             printHand();

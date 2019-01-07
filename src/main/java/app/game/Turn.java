@@ -46,17 +46,27 @@ public class Turn {
     }
 
     public void start() throws HandException {
-        int currentHandIndex = 0;
-        while(activePlayer.getHands().size() > currentHandIndex) {
-            try {
+        int currentHandIndex = -1;
+//        while(activePlayer.getHands().size() > currentHandIndex) {
+//            currentHandIndex++;
+//            if(this.activePlayer.checkBlackJack()) {
+//                activePlayer.printBlackJack();
+//                return;
+//            }
+//            try {
+//                playerAct();
+//            } catch (TurnException ex) {
+//                ex.printStackTrace();
+//            }
+//
+//            activePlayer.setCurrentHand(currentHandIndex);
+//        }
+
+        try {
                 playerAct();
             } catch (TurnException ex) {
                 ex.printStackTrace();
             }
-            currentHandIndex++;
-            activePlayer.setCurrentHand(currentHandIndex);
-        }
-
 
         dealer.play();
     }
@@ -71,15 +81,64 @@ public class Turn {
     public void playerAct() throws TurnException, HandException {
 
         //Validation is not required on below logic because check input handles if its valid for the given hand
-        this.checkInput();
 
-        if(this.playerInput.toString().equalsIgnoreCase("h")) {
+        System.out.println("INTIALI ACTION");
+        printActionMessage();
+
+        String nextLine = this.playerInput.next();
+//        System.out.println("Accepted input");
+
+        this.checkInput(nextLine);
+
+//        if(nextLine.equalsIgnoreCase("h")) {
+//            hit();
+//            if (activePlayer.getCurrentHand().getValue() < 21) playerAct();
+
+//        }
+//        else if(nextLine.equalsIgnoreCase("st")) {
+//            stand();
+//        } else if(nextLine.equalsIgnoreCase("d")) {
+//            doubleDown();
+//        } else if(nextLine.equalsIgnoreCase("sp")) {
+//            try {
+//                split();
+//            } catch (HandException ex) {
+//                throw new TurnException(ex);
+//            } catch (TurnException ex) {
+//                ex.printStackTrace();
+//            }
+//
+//        }
+
+
+
+        while (nextLine.equalsIgnoreCase("h") && activePlayer.getCurrentHand().getValue() < 21) {
             hit();
-        } else if(this.playerInput.toString().equalsIgnoreCase("st")) {
+
+            if (activePlayer.getCurrentHand().getValue() > 20)
+                break;
+//            } else {
+//                playerAct();
+//            }
+            System.out.println("ACTING INSIDE HIT");
+            printActionMessage();
+            nextLine = this.playerInput.next();
+
+        }
+
+
+    }
+
+    public void processAction(String action) throws TurnException, HandException {
+        if(action.equalsIgnoreCase("h")) {
+            hit();
+            if (activePlayer.getCurrentHand().getValue() < 21) playerAct();
+
+        } else if(action.equalsIgnoreCase("st")) {
             stand();
-        } else if(this.playerInput.toString().equalsIgnoreCase("d")) {
+        } else if(action.equalsIgnoreCase("d")) {
             doubleDown();
-        } else if(this.playerInput.toString().equalsIgnoreCase("sp")) {
+        } else if(action.equalsIgnoreCase("sp")) {
             try {
                 split();
             } catch (HandException ex) {
@@ -91,23 +150,17 @@ public class Turn {
         }
     }
 
-    public void hitOrStandAction() {
-
-    }
-
     public void hit () {
         activePlayer.addCard(dealer.dealFaceUp());
-
-        activePlayer.printHand();
-
         if(activePlayer.hands.getCurrentHand().getValue() > 21) {
-            return;
+            activePlayer.printBust();
+        } else {
+            activePlayer.printHand();
         }
     }
 
     public void stand() {
-        activePlayer.printHand();
-        return;
+        activePlayer.printStand();
     }
 
     public void split() throws HandException, TurnException {
@@ -118,19 +171,23 @@ public class Turn {
     public void doubleDown() {
         activePlayer.doubleDown(dealer.dealFaceUp());
         activePlayer.printHand();
-        return;
     }
 
     //
-    public void checkInput() throws HandException {
+    public void checkInput(String playerInput) throws HandException {
+        while(ACTION_SET.checkInput(playerInput, activePlayer.getCurrentHand())) {
+            printActionMessage();
+        }
+    }
+
+    public void printActionMessage() throws HandException {
+        System.out.println(System.lineSeparator() + generateActionMessage());
+    }
+
+    public String generateActionMessage() throws HandException {
         Hand currentHand = activePlayer.getCurrentHand();
         int actionInt = ACTION_SET.getActionSet(currentHand);
-        String actionMessaage = ACTION_SET.getMessage(actionInt);
-        System.out.println(System.lineSeparator() + actionMessaage);
-
-        while(ACTION_SET.checkInput(playerInput, currentHand)) {
-            System.out.println(actionMessaage);
-        }
+        return ACTION_SET.getMessage(actionInt);
     }
 
 

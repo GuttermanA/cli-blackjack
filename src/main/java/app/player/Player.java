@@ -9,7 +9,7 @@ public class Player {
 
 
     public final String name;
-    public final HandContainer  hands;
+    public HandContainer  hands;
 //    public int cardsValue = 0;
     public double bet = 0;
     public double winnings = 0;
@@ -17,6 +17,12 @@ public class Player {
     public Player() {
         this.name = "The Man with No Name";
         this.winnings += 100;
+        this.hands = new HandContainer();
+    }
+
+    public Player(String name) {
+        this.name = name;
+        this.winnings = 100;
         this.hands = new HandContainer();
     }
 
@@ -81,13 +87,38 @@ public class Player {
         }
     }
 
+    public void reset() {
+        this.hands = new HandContainer();
+    }
+
+    public boolean checkBlackJack () {
+        return getCurrentHand().checkBlackJack();
+    }
+
+    public boolean checkBust() {
+        return getCurrentHand().checkBust();
+    }
+
     public void doubleDown(Card card) {
         this.bet *= 2;
         addCard(card);
     }
 
     public void printHand() {
-        System.out.println(this.name + "has:" + System.lineSeparator() + this.toString());
+        System.out.println(this.name + " has:" + System.lineSeparator() + this.toString() + System.lineSeparator());
+    }
+
+    public void printBust() {
+        printHand();
+        System.out.println(this.name + " busted!" + System.lineSeparator());
+    }
+
+    public void printStand() {
+        System.out.println(this.name + " stood with a " + this.getCurrentHand().getValue() + System.lineSeparator());
+    }
+
+    public void printBlackJack() {
+        System.out.println("Black Jack!");
     }
 
     @Override

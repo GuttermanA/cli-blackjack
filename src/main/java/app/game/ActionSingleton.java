@@ -6,7 +6,6 @@ import app.player.Hand;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ActionSingleton {
 
@@ -54,9 +53,9 @@ public class ActionSingleton {
         return (String) actionMap.get(actionLevel).get("message");
     }
 
-    public boolean checkInput(Scanner playerInput, Hand hand) throws HandException {
+    public boolean checkInput(String playerInput, Hand hand) throws HandException {
         boolean result = true;
-        if(Arrays.asList(getActions(getActionSet(hand))).contains(playerInput.nextLine().toLowerCase()))
+        if(Arrays.asList(getActions(getActionSet(hand))).contains(playerInput.toLowerCase()))
             result = false;
 
 

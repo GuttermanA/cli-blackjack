@@ -29,7 +29,7 @@ public class Game {
 
     public Game() {
         this.players = new ArrayList<Player>();
-        players.add(new Player());
+//        players.add(new Player());
         this.dealer = new Dealer(this.players);
     }
 
@@ -39,15 +39,43 @@ public class Game {
         this.dealer = new Dealer(this.players, numDecks);
     }
 
+    public void addPlayer(String name) {
+        if(name.equalsIgnoreCase("")) {
+            this.players.add(new Player());
+        } else {
+            this.players.add(new Player(name));
+        }
+
+        System.out.println("Player " + this.players.size() + " '" + name + "' " + "has been added.");
+
+    }
+
 
 
     public void start() throws HandException {
-        dealer.dealOpeningCards();
-        printTurn();
 
-        for(int i = 0; i < players.size(); i++) {
-            new Turn(i, players.get(i), dealer, sc);
+        System.out.println(welcomeMessage());
+
+        String nextLine = sc.nextLine();
+
+        this.addPlayer(nextLine);
+
+        System.out.println(continueMessage());
+
+
+        while (!(nextLine = sc.nextLine()).equalsIgnoreCase("q")) {
+
+            dealer.dealOpeningCards();
+            printTurn();
+
+            for(int i = 0; i < players.size(); i++) {
+                Player currentPlayer = players.get(i);
+                new Turn(i, currentPlayer, dealer, sc);
+                currentPlayer.reset();
+            }
         }
+
+        end();
 
 //        dealer.checkHiddenBlackjack();
     }
@@ -59,13 +87,21 @@ public class Game {
 
 
     public void printActivePlayerHand() {
-        System.out.println(players.get(activePlayer).toString());
+        System.out.println(players.get(activePlayer).toString() + System.lineSeparator());
     }
 
     public void printTurn() {
         dealer.printOpeningHand();
         System.out.println("------------------------------------");
         printActivePlayerHand();
+    }
+
+    public String welcomeMessage() {
+        return "Welcome to CLI BlackJack" + System.lineSeparator() + "You can exit at anytime by entering 'q'" + System.lineSeparator() + "Please enter your name:";
+    }
+
+    public String continueMessage() {
+        return "Press 'q' to quit, and any other key to continue:";
     }
 
 }
