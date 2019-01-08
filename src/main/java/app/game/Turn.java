@@ -28,6 +28,7 @@ public class Turn {
     public Player activePlayer;
     public Dealer dealer;
     public Scanner playerInput;
+    public String inputNextLine;
 
     public Turn(int turnNum, Player activePlayer, Dealer dealer, Scanner playerInput) throws HandException {
         this.turnNum = turnNum;
@@ -82,63 +83,32 @@ public class Turn {
 
         //Validation is not required on below logic because check input handles if its valid for the given hand
 
-        System.out.println("INTIALI ACTION");
+        System.out.println("INSIDE PLAYER ACT");
+
         printActionMessage();
 
-        String nextLine = this.playerInput.next();
-//        System.out.println("Accepted input");
+        this.inputNextLine = this.playerInput.nextLine();
 
-        this.checkInput(nextLine);
-
-//        if(nextLine.equalsIgnoreCase("h")) {
-//            hit();
-//            if (activePlayer.getCurrentHand().getValue() < 21) playerAct();
-
-//        }
-//        else if(nextLine.equalsIgnoreCase("st")) {
-//            stand();
-//        } else if(nextLine.equalsIgnoreCase("d")) {
-//            doubleDown();
-//        } else if(nextLine.equalsIgnoreCase("sp")) {
-//            try {
-//                split();
-//            } catch (HandException ex) {
-//                throw new TurnException(ex);
-//            } catch (TurnException ex) {
-//                ex.printStackTrace();
-//            }
-//
-//        }
+        this.checkInput();
 
 
 
-        while (nextLine.equalsIgnoreCase("h") && activePlayer.getCurrentHand().getValue() < 21) {
+        while (inputNextLine.equalsIgnoreCase("h") && activePlayer.getCurrentHand().getValue() < 21) {
             hit();
 
             if (activePlayer.getCurrentHand().getValue() > 20)
-                break;
-//            } else {
-//                playerAct();
-//            }
+                return;
             System.out.println("ACTING INSIDE HIT");
             printActionMessage();
-            nextLine = this.playerInput.next();
-
+            inputNextLine = this.playerInput.nextLine();
+            this.checkInput();
         }
 
-
-    }
-
-    public void processAction(String action) throws TurnException, HandException {
-        if(action.equalsIgnoreCase("h")) {
-            hit();
-            if (activePlayer.getCurrentHand().getValue() < 21) playerAct();
-
-        } else if(action.equalsIgnoreCase("st")) {
+        if(inputNextLine.equalsIgnoreCase("st")) {
             stand();
-        } else if(action.equalsIgnoreCase("d")) {
+        } else if(inputNextLine.equalsIgnoreCase("d")) {
             doubleDown();
-        } else if(action.equalsIgnoreCase("sp")) {
+        } else if(inputNextLine.equalsIgnoreCase("sp")) {
             try {
                 split();
             } catch (HandException ex) {
@@ -146,8 +116,9 @@ public class Turn {
             } catch (TurnException ex) {
                 ex.printStackTrace();
             }
-
         }
+
+
     }
 
     public void hit () {
@@ -174,9 +145,10 @@ public class Turn {
     }
 
     //
-    public void checkInput(String playerInput) throws HandException {
-        while(ACTION_SET.checkInput(playerInput, activePlayer.getCurrentHand())) {
+    public void checkInput() throws HandException {
+        while(ACTION_SET.checkInput(inputNextLine, activePlayer.getCurrentHand())) {
             printActionMessage();
+            inputNextLine = this.playerInput.nextLine();
         }
     }
 

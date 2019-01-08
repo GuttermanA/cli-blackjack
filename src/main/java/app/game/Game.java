@@ -55,15 +55,18 @@ public class Game {
     public void start() throws HandException {
 
         System.out.println(welcomeMessage());
+//        System.out.println("------------------------------------");
+
+
+
+        this.addPlayer(sc.nextLine());
+
+        System.out.println(continueMessage());
+        System.out.println("------------------------------------");
 
         String nextLine = sc.nextLine();
 
-        this.addPlayer(nextLine);
-
-        System.out.println(continueMessage());
-
-
-        while (!(nextLine = sc.nextLine()).equalsIgnoreCase("q")) {
+        while (!nextLine.equalsIgnoreCase("q")) {
 
             dealer.dealOpeningCards();
             printTurn();
@@ -73,11 +76,17 @@ public class Game {
                 new Turn(i, currentPlayer, dealer, sc);
                 currentPlayer.reset();
             }
+
+
+
+            System.out.println(continueMessage());
+            System.out.println("------------------------------------");
+            nextLine = sc.nextLine();
         }
 
-        end();
 
-//        dealer.checkHiddenBlackjack();
+
+        end();
     }
 
     public void end() {

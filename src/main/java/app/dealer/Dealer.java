@@ -83,6 +83,8 @@ public class Dealer {
         } else {
             printStand();
         }
+
+        System.out.println("DEALER FINISHED");
     }
 
     @Override
@@ -96,12 +98,12 @@ public class Dealer {
 
     public void printStand() {
 //        printHand();
-        System.out.println("The dealer stood.");
+        System.out.println("The dealer stood." + System.lineSeparator());
     }
 
     public void printBust() {
 //        printHand();
-        System.out.println("The dealer busted!");
+        System.out.println("The dealer busted!" + System.lineSeparator());
     }
 
     public void printOpeningHand() {
