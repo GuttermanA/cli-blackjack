@@ -8,11 +8,13 @@ import app.player.Player;
 import java.util.List;
 
 public class Dealer {
-    public final Hand hand;
+    public Hand hand;
     public final Deck deck;
     public final List<Player> players;
     public Card upCard;
     public Card downCard;
+    public boolean busted = false;
+    public boolean blackJack = false;
 
     public Dealer(List<Player> players, int numDecks) {
         this.hand = new Hand();
@@ -24,6 +26,12 @@ public class Dealer {
         this.hand = new Hand();
         this.deck = new Deck();
         this.players = players;
+    }
+
+    public void reset() {
+        this.busted = false;
+        this.blackJack = false;
+        this.hand = new Hand();
     }
 
     public void dealOpeningCards() {
@@ -39,6 +47,14 @@ public class Dealer {
             }
         }
 
+    }
+
+    public List<Card> getHand() {
+        return this.hand.cards;
+    }
+
+    public int getHandValue() {
+        return this.hand.getValue();
     }
 
 
@@ -62,7 +78,7 @@ public class Dealer {
         boolean result =  false;
         if(upCard instanceof Ace) {
             //ask for insurance
-            result = hand.checkBlackJack();
+            result = checkBlackJack();
         }
 
         return result;
@@ -70,8 +86,13 @@ public class Dealer {
 
     public void play() {
         downCard.setHidden(false);
-        System.out.println( System.lineSeparator() + "The dealers hand is: ");
+
         printHand();
+
+        if(checkBlackJack()) {
+            printBlackJack();
+            return;
+        }
 
         while(this.hand.getValue() <=16) {
             this.hand.addCard(dealFaceUp());
@@ -79,6 +100,7 @@ public class Dealer {
         }
 
         if(this.hand.getValue() > 21) {
+            this.busted = true;
             printBust();
         } else {
             printStand();
@@ -87,12 +109,12 @@ public class Dealer {
         System.out.println("DEALER FINISHED");
     }
 
-    @Override
-    public String toString() {
-        return this.hand.toString();
+    public boolean checkBlackJack() {
+        return this.hand.checkBlackJack();
     }
 
     public void printHand() {
+        System.out.println( System.lineSeparator() + "The dealers hand is: ");
         System.out.println(this.toString());
     }
 
@@ -109,5 +131,21 @@ public class Dealer {
     public void printOpeningHand() {
         System.out.println("The dealer's opening hand is an up " + this.upCard.toString());
     }
+
+    public void printBlackJack() {
+        System.out.println("Dealer has a black jack!");
+        printWin();
+    }
+
+    public void printWin() {
+        System.out.println("Dealer won!");
+    }
+
+    @Override
+    public String toString() {
+        return this.hand.toString();
+    }
+
+
 
 }

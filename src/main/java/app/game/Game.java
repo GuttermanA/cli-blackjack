@@ -69,25 +69,78 @@ public class Game {
         while (!nextLine.equalsIgnoreCase("q")) {
 
             dealer.dealOpeningCards();
-            printTurn();
 
-            for(int i = 0; i < players.size(); i++) {
-                Player currentPlayer = players.get(i);
-                new Turn(i, currentPlayer, dealer, sc);
-                currentPlayer.reset();
+            bets();
+
+            if(dealer.checkHiddenBlackjack()) {
+                dealer.printWin();
+            } else {
+                turns();
+
+                dealer.play();
+
+                results();
             }
 
 
+
+            dealer.reset();
 
             System.out.println(continueMessage());
             System.out.println("------------------------------------");
             nextLine = sc.nextLine();
         }
 
-
-
         end();
     }
+
+    public boolean checkWin(int player) {
+        return players.get(player).getCurrentHandValue() > dealer.getHandValue();
+    }
+
+    public boolean checkPush(int player) {
+        return players.get(player).getCurrentHandValue() == dealer.getHandValue();
+    }
+
+    public void bets() {
+        printPlaceBets();
+        for(int i = 0; i < players.size(); i++) {
+            Player currentPlayer = players.get(i);
+
+            currentPlayer.placeBet(sc.nextDouble());
+        }
+    }
+
+    public double checkBet() {
+        double bet = sc.nextDouble();
+
+
+
+        return bet;
+    }
+
+    public void turns() throws HandException {
+        for(int i = 0; i < players.size(); i++) {
+            Player currentPlayer = players.get(i);
+            new Turn(i, currentPlayer, dealer, sc);
+        }
+    }
+
+    public void results() {
+        for(int i = 0; i < players.size(); i++) {
+            Player currentPlayer = players.get(i);
+            if(currentPlayer.blackJack || dealer.busted || checkWin(i)) {
+                currentPlayer.win();
+            } else if(checkPush(i)) {
+                currentPlayer.push();
+            } else {
+                currentPlayer.lose();
+                dealer.printWin();
+            }
+            currentPlayer.reset();
+        }
+    }
+
 
     public void end() {
         System.out.println("Thanks for playing!");
@@ -103,6 +156,10 @@ public class Game {
         dealer.printOpeningHand();
         System.out.println("------------------------------------");
         printActivePlayerHand();
+    }
+
+    public void printPlaceBets() {
+        System.out.println("Please place bets:");
     }
 
     public String welcomeMessage() {

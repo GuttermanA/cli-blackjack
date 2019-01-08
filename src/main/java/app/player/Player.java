@@ -13,6 +13,8 @@ public class Player {
 //    public int cardsValue = 0;
     public double bet = 0;
     public double winnings = 0;
+    public boolean busted = false;
+    public boolean blackJack = false;
 
     public Player() {
         this.name = "The Man with No Name";
@@ -65,6 +67,10 @@ public class Player {
         return this.hands.getCurrentHand();
     }
 
+    public int getCurrentHandValue() {
+        return this.getCurrentHand().getValue();
+    }
+
     public double getBet() {
         return this.bet;
     }
@@ -88,15 +94,37 @@ public class Player {
     }
 
     public void reset() {
+        this.busted = false;
+        this.blackJack = false;
         this.hands = new HandContainer();
     }
 
     public boolean checkBlackJack () {
-        return getCurrentHand().checkBlackJack();
+        this.blackJack = getCurrentHand().checkBlackJack();
+        return this.blackJack;
     }
 
     public boolean checkBust() {
-        return getCurrentHand().checkBust();
+        this.busted = getCurrentHand().checkBust();
+        return this.busted;
+    }
+
+    public void placeBet(double bet) {
+        this.setBet(bet);
+        printBet();
+    }
+
+    public void push() {
+        printPush();
+    }
+
+    public void win() {
+        this.winnings += this.bet;
+        printWin();
+    }
+
+    public void lose() {
+        printLose();
     }
 
     public void doubleDown(Card card) {
@@ -106,6 +134,10 @@ public class Player {
 
     public void printHand() {
         System.out.println(this.name + " has:" + System.lineSeparator() + this.toString() + System.lineSeparator());
+    }
+
+    public void printBet() {
+        System.out.println(this.name + " bet " + this.bet);
     }
 
     public void printBust() {
@@ -118,7 +150,20 @@ public class Player {
     }
 
     public void printBlackJack() {
-        System.out.println("Black Jack!");
+        System.out.println(this.name + " has a Black Jack!");
+        printWin();
+    }
+
+    public void printWin() {
+        System.out.println(this.name + " won " + this.bet);
+    }
+
+    public void printLose() {
+        System.out.println(this.name + " lost " + this.bet);
+    }
+
+    public void printPush() {
+        System.out.println(this.name + " pushed.");
     }
 
     @Override

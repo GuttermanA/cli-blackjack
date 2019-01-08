@@ -63,13 +63,13 @@ public class Turn {
 //            activePlayer.setCurrentHand(currentHandIndex);
 //        }
 
+
+
         try {
                 playerAct();
             } catch (TurnException ex) {
                 ex.printStackTrace();
             }
-
-        dealer.play();
     }
 
 
@@ -120,6 +120,7 @@ public class Turn {
 
 
     }
+
 
     public void hit () {
         activePlayer.addCard(dealer.dealFaceUp());
