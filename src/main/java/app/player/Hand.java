@@ -43,9 +43,6 @@ public class Hand {
     private void setValue() {
         this.value = 0;
         for(Card card : this.cards) {
-//            if(card.isHidden()) {
-//                continue;
-//            }
             if(card instanceof Ace) {
                 this.addAce();
                 Ace ace = (Ace) card;
@@ -74,7 +71,7 @@ public class Hand {
     }
 
     public int getLowAceValue() {
-        return this.value - (10 + numAces);
+        return this.value - (10 * numAces);
     }
 
     public boolean checkBlackJack() {

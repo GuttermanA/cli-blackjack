@@ -1,6 +1,7 @@
 package app.player;
 
 import app.card.Card;
+import app.error.BetException;
 import app.error.HandException;
 
 import java.util.List;
@@ -50,9 +51,13 @@ public class Player {
         hands.getCurrentHand().addCard(card);
     }
 
-    public void setBet(double bet) {
-        this.bet = bet;
-        this.winnings -= bet;
+    public void setBet(double bet) throws BetException {
+        if(bet > this.winnings) {
+            throw new BetException("Bet cannot be greater than current winnings");
+        } else {
+            this.bet = bet;
+            this.winnings -= bet;
+        }
     }
 
     public List<Hand> getHands() {
@@ -96,7 +101,12 @@ public class Player {
     public void reset() {
         this.busted = false;
         this.blackJack = false;
+        this.bet = 0;
         this.hands = new HandContainer();
+    }
+
+    public boolean checkZeroWinnings() {
+        return this.winnings == 0;
     }
 
     public boolean checkBlackJack () {
@@ -109,27 +119,48 @@ public class Player {
         return this.busted;
     }
 
-    public void placeBet(double bet) {
-        this.setBet(bet);
+    public void placeBet(double bet) throws BetException {
+        try {
+            this.setBet(bet);
+        } catch (BetException e) {
+
+        }
+
         printBet();
     }
 
     public void push() {
+        this.winnings += this.bet;
         printPush();
     }
 
     public void win() {
-        this.winnings += this.bet;
+        this.winnings += 2 * this.bet;
         printWin();
+    }
+
+    public void blackJackWin() {
+        this.winnings += this.bet * 2.5;
+        printBlackJack();
     }
 
     public void lose() {
         printLose();
     }
 
+    public void printZeroWinningsLoss() {
+        System.out.println(this.name + " lost all of their money!" + System.lineSeparator() + this.name + " loses the game!");
+    }
+
     public void doubleDown(Card card) {
         this.bet *= 2;
+        this.winnings -= this.bet;
         addCard(card);
+        printDouble();
+    }
+
+    public void printDouble() {
+        System.out.println(this.name + " doubled down!");
     }
 
     public void printHand() {
@@ -137,8 +168,9 @@ public class Player {
     }
 
     public void printBet() {
-        System.out.println(this.name + " bet " + this.bet);
+        System.out.println(this.name + " bet " + this.bet + System.lineSeparator());
     }
+
 
     public void printBust() {
         printHand();
@@ -166,6 +198,12 @@ public class Player {
         System.out.println(this.name + " pushed.");
     }
 
+    public void printWinnings() {
+        System.out.println(this.name + " has " + this.winnings + " winnings.");
+    }
+
+
+
     @Override
     public String toString() {
         return hands.getCurrentHand().toString();
@@ -173,3 +211,4 @@ public class Player {
 
 
 }
+

@@ -85,22 +85,20 @@ public class Turn {
 
         System.out.println("INSIDE PLAYER ACT");
 
-        printActionMessage();
+        if(activePlayer.checkBlackJack()) return;
 
-        this.inputNextLine = this.playerInput.nextLine();
+//        printActionMessage();
+
+//        this.inputNextLine = this.playerInput.nextLine();
 
         this.checkInput();
-
-
 
         while (inputNextLine.equalsIgnoreCase("h") && activePlayer.getCurrentHand().getValue() < 21) {
             hit();
 
-            if (activePlayer.getCurrentHand().getValue() > 20)
-                return;
-            System.out.println("ACTING INSIDE HIT");
+            if (activePlayer.checkBust()) return;
             printActionMessage();
-            inputNextLine = this.playerInput.nextLine();
+//            inputNextLine = this.playerInput.nextLine();
             this.checkInput();
         }
 
@@ -147,6 +145,7 @@ public class Turn {
 
     //
     public void checkInput() throws HandException {
+        inputNextLine = this.playerInput.nextLine();
         while(ACTION_SET.checkInput(inputNextLine, activePlayer.getCurrentHand())) {
             printActionMessage();
             inputNextLine = this.playerInput.nextLine();

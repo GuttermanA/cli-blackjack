@@ -1,6 +1,7 @@
 package app.game;
 
 import app.dealer.Dealer;
+import app.error.BetException;
 import app.error.HandException;
 import app.player.Player;
 
@@ -64,13 +65,15 @@ public class Game {
         System.out.println(continueMessage());
         System.out.println("------------------------------------");
 
-        String nextLine = sc.nextLine();
+//        String nextLine = sc.nextLine();
 
-        while (!nextLine.equalsIgnoreCase("q")) {
+        while (!sc.nextLine().equalsIgnoreCase("q") && this.players.size() > 0) {
+
+            bets();
 
             dealer.dealOpeningCards();
 
-            bets();
+            printTurn();
 
             if(dealer.checkHiddenBlackjack()) {
                 dealer.printWin();
@@ -88,7 +91,7 @@ public class Game {
 
             System.out.println(continueMessage());
             System.out.println("------------------------------------");
-            nextLine = sc.nextLine();
+//            nextLine = sc.nextLine();
         }
 
         end();
@@ -103,20 +106,34 @@ public class Game {
     }
 
     public void bets() {
-        printPlaceBets();
         for(int i = 0; i < players.size(); i++) {
-            Player currentPlayer = players.get(i);
 
-            currentPlayer.placeBet(sc.nextDouble());
+            Player currentPlayer = players.get(i);
+            currentPlayer.printWinnings();
+            printPlaceBets();
+            while(true) {
+                double bet = validateBet();
+                try {
+                    currentPlayer.placeBet(bet);
+                    return;
+                } catch (BetException ex) {
+                    printBetMessage();
+                }
+            }
+
         }
     }
 
-    public double checkBet() {
-        double bet = sc.nextDouble();
-
-
-
-        return bet;
+    public double validateBet() {
+        while(true) {
+            try {
+                double bet = sc.nextDouble();
+                return bet;
+            } catch (java.util.InputMismatchException e) {
+                sc.next();
+                printBetMessage();
+            }
+        }
     }
 
     public void turns() throws HandException {
@@ -129,7 +146,9 @@ public class Game {
     public void results() {
         for(int i = 0; i < players.size(); i++) {
             Player currentPlayer = players.get(i);
-            if(currentPlayer.blackJack || dealer.busted || checkWin(i)) {
+            if(currentPlayer.checkBlackJack()) {
+                currentPlayer.blackJackWin();
+            } else if((dealer.busted || checkWin(i)) && !currentPlayer.busted) {
                 currentPlayer.win();
             } else if(checkPush(i)) {
                 currentPlayer.push();
@@ -137,13 +156,23 @@ public class Game {
                 currentPlayer.lose();
                 dealer.printWin();
             }
-            currentPlayer.reset();
+
+            currentPlayer.printWinnings();
+            if(currentPlayer.checkZeroWinnings()) {
+                currentPlayer.printZeroWinningsLoss();
+                this.players.remove(i);
+                if(this.players.size() == 0) return;
+            } else {
+                currentPlayer.reset();
+            }
+
         }
     }
 
 
     public void end() {
         System.out.println("Thanks for playing!");
+        sc.close();
         System.exit(0);
     }
 
@@ -161,6 +190,13 @@ public class Game {
     public void printPlaceBets() {
         System.out.println("Please place bets:");
     }
+
+    public void printBetMessage() {
+        System.out.println("Please enter a valid bet:");
+    }
+
+
+
 
     public String welcomeMessage() {
         return "Welcome to CLI BlackJack" + System.lineSeparator() + "You can exit at anytime by entering 'q'" + System.lineSeparator() + "Please enter your name:";
