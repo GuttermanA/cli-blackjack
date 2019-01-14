@@ -1,8 +1,7 @@
 package app.game;
 
 import app.dealer.Dealer;
-import app.error.BetException;
-import app.error.HandException;
+import app.exception.HandException;
 import app.player.Player;
 
 import java.util.ArrayList;
@@ -113,12 +112,8 @@ public class Game {
             printPlaceBets();
             while(true) {
                 double bet = validateBet();
-                try {
                     currentPlayer.placeBet(bet);
                     return;
-                } catch (BetException ex) {
-                    printBetMessage();
-                }
             }
 
         }
@@ -139,7 +134,7 @@ public class Game {
     public void turns() throws HandException {
         for(int i = 0; i < players.size(); i++) {
             Player currentPlayer = players.get(i);
-            new Turn(i, currentPlayer, dealer, sc);
+            new Turn(currentPlayer, dealer, sc);
         }
     }
 

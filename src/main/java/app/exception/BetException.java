@@ -1,4 +1,4 @@
-package app.error;
+package app.exception;
 
 public class BetException extends Exception {
     public BetException(String message) {

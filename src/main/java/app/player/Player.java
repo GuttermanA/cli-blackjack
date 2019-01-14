@@ -1,8 +1,8 @@
 package app.player;
 
 import app.card.Card;
-import app.error.BetException;
-import app.error.HandException;
+import app.exception.BetException;
+import app.exception.HandException;
 
 import java.util.List;
 
@@ -84,18 +84,20 @@ public class Player {
         hands.getCurrentHand().addCard(card);
     }
 
-    public void split() {
+    public void split(Card card1, Card card2) {
         try {
             hands.getCurrentHand().canSplit();
         } catch (HandException ex) {
             ex.printStackTrace();
         }
-        Card firstCard = hands.getCurrentHand().cards.get(0);
-        Card secondCard = hands.getCurrentHand().cards.get(1);
-        if(firstCard.value == secondCard.value) {
-            this.hands.addHand(secondCard);
-            hands.getCurrentHand().cards.remove(secondCard);
-        }
+        Hand originalHand = hands.getCurrentHand();
+//        Card firstCard = originalHand.cards.get(0);
+        Card secondCard = originalHand.cards.get(1);
+        Hand newHand = this.hands.addHand(secondCard);
+        originalHand.cards.remove(secondCard);
+
+        originalHand.addCard(card1);
+        newHand.addCard(card2);
     }
 
     public void reset() {
@@ -119,11 +121,11 @@ public class Player {
         return this.busted;
     }
 
-    public void placeBet(double bet) throws BetException {
+    public void placeBet(double bet) {
         try {
             this.setBet(bet);
         } catch (BetException e) {
-
+            e.printStackTrace();
         }
 
         printBet();

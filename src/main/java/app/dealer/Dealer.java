@@ -59,11 +59,11 @@ public class Dealer {
 
 
     public Card dealFaceUp() {
-        return (Card) deck.removeFirst();
+        return deck.removeFirst();
     }
 
     public Card dealFaceDown() {
-        Card card = (Card) deck.removeFirst();
+        Card card = deck.removeFirst();
         card.setHidden(true);
         return card;
     }

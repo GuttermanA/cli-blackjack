@@ -1,6 +1,6 @@
 package app.game;
 
-import app.error.HandException;
+import app.exception.HandException;
 import app.player.Hand;
 
 import java.util.Arrays;

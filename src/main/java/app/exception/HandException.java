@@ -1,4 +1,4 @@
-package app.error;
+package app.exception;
 
 public class HandException extends Exception {
     public HandException(String message) {

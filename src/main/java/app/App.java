@@ -1,6 +1,6 @@
 package app;
 
-import app.error.HandException;
+import app.exception.HandException;
 import app.game.Game;
 
 public class App {

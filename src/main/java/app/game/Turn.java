@@ -1,7 +1,7 @@
 package app.game;
 
 import app.dealer.Dealer;
-import app.error.HandException;
+import app.exception.HandException;
 import app.player.Hand;
 import app.player.Player;
 
@@ -19,9 +19,10 @@ public class Turn {
 //    public static final String splitActionMessage = "Please stand, hit, split, or double:";
 //    public static final String hitOrStandMessage = "Please stand or hit";
 
-    public static final ActionSingleton ACTION_SET = ActionSingleton.getInstance();;
+    public static final ActionSingleton ACTION_SET = ActionSingleton.getInstance();
+    private static int idCounter = 0;
 
-    public int turnNum;
+    public int id;
 
 
 
@@ -30,8 +31,8 @@ public class Turn {
     public Scanner playerInput;
     public String inputNextLine;
 
-    public Turn(int turnNum, Player activePlayer, Dealer dealer, Scanner playerInput) throws HandException {
-        this.turnNum = turnNum;
+    public Turn(Player activePlayer, Dealer dealer, Scanner playerInput) throws HandException {
+        this.id= ++idCounter;
         this.activePlayer = activePlayer;
         this.dealer = dealer;
         this.playerInput = playerInput;
@@ -47,9 +48,23 @@ public class Turn {
     }
 
     public void start() throws HandException {
-        int currentHandIndex = -1;
+        int currentHandIndex = 0;
+
+        for(int i = 0; i < activePlayer.getHands().size(); i++) {
+            activePlayer.setCurrentHand(currentHandIndex);
+            if(this.activePlayer.checkBlackJack()) {
+                activePlayer.printBlackJack();
+                return;
+            }
+            try {
+                playerAct();
+            } catch (TurnException ex) {
+                ex.printStackTrace();
+            }
+        }
+
 //        while(activePlayer.getHands().size() > currentHandIndex) {
-//            currentHandIndex++;
+//            activePlayer.setCurrentHand(currentHandIndex);
 //            if(this.activePlayer.checkBlackJack()) {
 //                activePlayer.printBlackJack();
 //                return;
@@ -59,17 +74,17 @@ public class Turn {
 //            } catch (TurnException ex) {
 //                ex.printStackTrace();
 //            }
+//            currentHandIndex++;
 //
-//            activePlayer.setCurrentHand(currentHandIndex);
 //        }
 
 
 
-        try {
-                playerAct();
-            } catch (TurnException ex) {
-                ex.printStackTrace();
-            }
+//        try {
+//                playerAct();
+//            } catch (TurnException ex) {
+//                ex.printStackTrace();
+//            }
     }
 
 
@@ -121,7 +136,7 @@ public class Turn {
 
 
     public void hit () {
-        activePlayer.addCard(dealer.dealFaceUp());
+        activePlayer.hit(dealer.dealFaceUp());
         if(activePlayer.hands.getCurrentHand().getValue() > 21) {
             activePlayer.printBust();
         } else {
@@ -135,7 +150,7 @@ public class Turn {
 
     public void split() throws HandException, TurnException {
         if(!activePlayer.hands.getCurrentHand().canSplit()) throw new TurnException("Invalid input because hand cannot be split");
-        activePlayer.split();
+        activePlayer.split(dealer.dealFaceUp(), dealer.dealFaceUp());
     }
 
     public void doubleDown() {

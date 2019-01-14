@@ -11,8 +11,8 @@ public class Card {
 
     public final int value;
 
-    public static int idCounter = 0;
-    public final int id;
+    private static int idCounter = 0;
+    private final int id;
 
 
     protected final int unicodeSuit;
@@ -48,10 +48,6 @@ public class Card {
         return 0x0000FFFD;
     }
 
-    public boolean isAce() {
-        return this instanceof Ace;
-    }
-
     public int getValue() {
         return value;
     }
@@ -77,6 +73,15 @@ public class Card {
         System.out.println(toString());
     }
 
+    public boolean canSplit(Object o) {
+        if(o == this) return true;
+        if(!(o instanceof Card)) return false;
+        Card card = (Card) o;
+
+        return this.value == card.value;
+    }
+
+
     @Override
     public String toString() {
         return this.hidden ? "" : String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.getValue());
@@ -88,7 +93,7 @@ public class Card {
         if(!(o instanceof Card)) return false;
         Card card = (Card) o;
 
-        return this.value == card.value;
+        return this.value == card.value && unicodeSuit == card.unicodeSuit;
     }
 
     @Override

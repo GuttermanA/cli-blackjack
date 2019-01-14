@@ -2,7 +2,7 @@ package app.player;
 
 import app.card.Ace;
 import app.card.Card;
-import app.error.HandException;
+import app.exception.HandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,9 @@ public class Hand {
         return this.value == 21 && this.cards.size() == 2;
     }
 
-    public boolean checkBust() { return this.value > 21; }
+    public boolean checkBust() {
+        return this.value > 21;
+    }
 
     public int numCards() {
         return cards.size();

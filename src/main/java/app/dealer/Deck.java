@@ -6,14 +6,16 @@ import app.card.Royal;
 
 import java.util.*;
 
-public class Deck extends ArrayDeque {
+public class Deck {
+
+    public final Deque<Card> cards = new ArrayDeque<>();
 
     public Deck(int numDecks) {
-        this.addAll(generateCards(numDecks));
+        cards.addAll(generateCards(numDecks));
     }
 
     public Deck() {
-        this.addAll(generateCards(1));
+        cards.addAll(generateCards(1));
     }
 
     private List<Card> generateCards(int numDecks) {
@@ -47,10 +49,14 @@ public class Deck extends ArrayDeque {
         return deckArray;
     }
 
+    public Card removeFirst() {
+        return cards.removeFirst();
+    }
+
 
 
     public void print() {
-        Iterator iterator = this.iterator();
+        Iterator iterator = cards.iterator();
         int counter = 1;
 
         while(iterator.hasNext()) {

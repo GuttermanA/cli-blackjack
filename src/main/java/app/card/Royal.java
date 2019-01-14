@@ -21,6 +21,15 @@ public class Royal extends Card {
     }
 
     @Override
+    public boolean canSplit(Object o) {
+        if(o == this) return true;
+        if(!(o instanceof Royal)) return false;
+        Royal card = (Royal) o;
+
+        return Objects.equals(this.type, card.type);
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(Character.toChars(this.getUnicodeSuit())) + (this.isHidden() ? "" : this.getType());
     }

@@ -8,10 +8,18 @@ import java.util.List;
 public class HandContainer {
 
     private int currentHand = 0;
+
+
+
+    private int numHands = 0;
     public List<Hand> hands = new ArrayList<>();
 
     public HandContainer() {
-        this.hands.add(new Hand());
+        this.addHand();
+    }
+
+    public HandContainer(List<Card> cards) {
+        this.addHand(cards);
     }
 
     public Hand getCurrentHand() {
@@ -22,16 +30,33 @@ public class HandContainer {
 //        this.hands.add(new Hand(card));
 //    }
 
-    public void addHand() {
-        this.hands.add(new Hand());
+    public Hand addHand(List<Card> cards) {
+        this.numHands++;
+        Hand newHand = new Hand(cards);
+        this.hands.add(newHand);
+        return newHand;
+    }
+
+    public Hand addHand() {
+        this.numHands++;
+        Hand newHand = new Hand();
+        this.hands.add(newHand);
+        return newHand;
+    }
+
+    public Hand addHand(Card card) {
+        this.numHands++;
+        Hand newHand = new Hand(card);
+        this.hands.add(newHand);
+        return newHand;
     }
 
     public List<Hand> getHands() {
         return this.hands;
     }
 
-    public void addHand(Card card) {
-        this.hands.add(new Hand(card));
+    public int getNumHands() {
+        return numHands;
     }
 
     public void setCurrentHand(int currentHand) {
