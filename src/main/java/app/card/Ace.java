@@ -1,7 +1,7 @@
 package app.card;
 
 public class Ace extends Royal {
-    public int[] value = {1,11};
+    private int[] value = {1,11};
 
     public Ace(String suit) {
         super(suit, 'A');

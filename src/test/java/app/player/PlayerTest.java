@@ -46,7 +46,7 @@ public class PlayerTest {
     @Test
     public void hit() {
         //adds card from deck to current hand
-        List<Card> hand = player.getCurrentHand().cards;
+        List<Card> hand = player.getCurrentHand().getCards();
         int initialHandSize = hand.size();
         Card dealtCard = dealer.dealFaceUp();
         player.hit(dealtCard);
@@ -83,10 +83,10 @@ public class PlayerTest {
     public void addCard() {
         //adds card from dealer to current hand at end
         Card dealtCard = dealer.dealFaceUp();
-        List<Card> currentCards = player.getCurrentHand().cards;
+        List<Card> currentCards = player.getCurrentHand().getCards();
         player.addCard(dealtCard);
 
-        boolean newHandSizeEquals3 = player.getCurrentHand().cards.size() == 3;
+        boolean newHandSizeEquals3 = player.getCurrentHand().getCards().size() == 3;
 
         boolean lastCardIsDealtCard = currentCards.get(currentCards.size() - 1).equals(dealtCard);
 
@@ -100,22 +100,22 @@ public class PlayerTest {
         player.reset();
         player.addCard(new Card(6, "SPADES"));
         player.addCard(new Card(6, "SPADES"));
-        List<Card> initialCards = new ArrayList<>(player.hands.getCurrentHand().cards);
+        List<Card> initialCards = new ArrayList<>(player.getCurrentHand().getCards());
 //        Card firstCard = initialCards.get(0);
         Card secondCard = initialCards.get(1);
 //        int initialNumHands = player.hands.getNumHands();
 
         player.split(dealer.dealFaceUp(), dealer.dealFaceDown());
 
-        List<Card> newCards = new ArrayList<>(player.hands.getHands().get(1).cards);
+        List<Card> newCards = new ArrayList<>(player.getHands().get(1).getCards());
 
         boolean firstCardNewHandEqualsSecondCardInitialHand = secondCard.equals(newCards.get(0));
 
-        boolean twoHands = player.hands.getNumHands() == 2;
+        boolean twoHands = player.getNumHands() == 2;
 
-        boolean firstHandSizeTwo = player.hands.getHands().get(0).cards.size() == 2;
+        boolean firstHandSizeTwo = player.getHands().get(0).getCards().size() == 2;
 
-        boolean secondHandSizeTwo = player.hands.getHands().get(1).cards.size() == 2;
+        boolean secondHandSizeTwo = player.getHands().get(1).getCards().size() == 2;
 
         assertTrue(firstCardNewHandEqualsSecondCardInitialHand);
         assertTrue(twoHands);
@@ -127,21 +127,21 @@ public class PlayerTest {
     @Test
     public void reset() {
         //resets busted, blackJack, bet, and hands attributes
-        player.busted = true;
-        player.blackJack = true;
-        player.bet = 100;
+        player.setBusted(true);
+        player.setBlackJack(true);
+        player.placeBet(100);
 
         player.reset();
-        assertFalse(player.busted);
-        assertFalse(player.blackJack);
-        assertEquals(0, player.bet, .000001);
-        assertEquals(0, player.getCurrentHand().cards.size());
+        assertFalse(player.isBusted());
+        assertFalse(player.isBlackJack());
+        assertEquals(0, player.getBet(), .000001);
+        assertEquals(0, player.getCurrentHand().getCards().size());
 
     }
 
     @Test
     public void checkZeroWinnings() {
-        player.winnings = 0;
+        player.setWinnings(0);
         boolean trueIfWinningsEqualsZero = player.checkZeroWinnings();
         assertTrue(trueIfWinningsEqualsZero);
     }
@@ -154,13 +154,13 @@ public class PlayerTest {
     public void checkBust() {
 //        //sets attribute busted based on current hand value and returns value
         assertFalse(player.checkBust());
-        assertFalse(player.busted);
+        assertFalse(player.isBusted());
 
         Hand newHand = player.addHand(new Royal("SPADES", 'Q'), new Royal("SPADES", 'Q'));
         newHand.addCard(new Royal("SPADES", 'Q'));
         player.setCurrentHand(1);
         assertTrue(player.checkBust());
-        assertTrue(player.busted);
+        assertTrue(player.isBusted());
     }
 
     @Test
@@ -168,11 +168,11 @@ public class PlayerTest {
         //sets bet attribute to given bet value and subtracts from winnings
 
         double bet = 1;
-        double initialWinnings = player.winnings;
+        double initialWinnings = player.getWinnings();
         player.placeBet(1);
 
         assertEquals(1, player.getBet(), .00001);
-        assertEquals(player.winnings, initialWinnings - bet, .00001);
+        assertEquals(player.getWinnings(), initialWinnings - bet, .00001);
 
     }
 
@@ -180,10 +180,10 @@ public class PlayerTest {
     public void push() {
         player.printWinnings();
         //increases winnings by bet
-        double initialWinnings = player.winnings;
+        double initialWinnings = player.getWinnings();
         player.placeBet(1);
         player.push();
-        double newWinnings = player.winnings;
+        double newWinnings = player.getWinnings();
 
         assertEquals(initialWinnings, newWinnings, .0001);
     }
@@ -191,10 +191,10 @@ public class PlayerTest {
     @Test
     public void win() {
         //increases winnings by bet * 2
-        double initialWinnings = player.winnings;
+        double initialWinnings = player.getWinnings();
         player.placeBet(1);
         player.win();
-        double newWinnings = player.winnings;
+        double newWinnings = player.getWinnings();
 
         assertEquals(initialWinnings + player.getBet(), newWinnings, .0001);
     }
@@ -202,10 +202,10 @@ public class PlayerTest {
     @Test
     public void blackJackWin() {
         //incraseas winnings by bet * 2.5
-        double initialWinnings = player.winnings;
+        double initialWinnings = player.getWinnings();
         player.placeBet(1);
         player.blackJackWin();
-        double newWinnings = player.winnings;
+        double newWinnings = player.getWinnings();
 
         assertEquals(initialWinnings + player.getBet() * 1.5, newWinnings, .0001);
     }
@@ -213,11 +213,11 @@ public class PlayerTest {
     @Test
     public void lose() {
         //decrease winnings by bet
-        double initialWinnings = player.winnings;
+        double initialWinnings = player.getWinnings();
         player.placeBet(1);
 
         player.lose();
-        double newWinnings = player.winnings;
+        double newWinnings = player.getWinnings();
 
         assertEquals(initialWinnings - player.getBet(), newWinnings , .0001);
     }

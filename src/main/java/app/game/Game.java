@@ -143,7 +143,7 @@ public class Game {
             Player currentPlayer = players.get(i);
             if(currentPlayer.checkBlackJack()) {
                 currentPlayer.blackJackWin();
-            } else if((dealer.busted || checkWin(i)) && !currentPlayer.busted) {
+            } else if((dealer.isBusted() || checkWin(i)) && !currentPlayer.isBusted()) {
                 currentPlayer.win();
             } else if(checkPush(i)) {
                 currentPlayer.push();

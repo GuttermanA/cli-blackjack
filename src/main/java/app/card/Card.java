@@ -15,10 +15,10 @@ public class Card {
     private final int id;
 
 
-    protected final int unicodeSuit;
-    protected final String suit;
+    private final int unicodeSuit;
+    private final String suit;
 
-    protected boolean hidden = false;
+    private boolean hidden = false;
 
 
     public Card(int value, String suit) {

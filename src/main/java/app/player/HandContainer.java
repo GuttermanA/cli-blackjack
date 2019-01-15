@@ -12,7 +12,7 @@ public class HandContainer {
 
 
     private int numHands = 0;
-    public List<Hand> hands = new ArrayList<>();
+    private List<Hand> hands = new ArrayList<>();
 
     public HandContainer() {
         this.addHand();

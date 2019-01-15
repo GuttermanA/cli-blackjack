@@ -10,7 +10,7 @@ import java.util.List;
 public class Hand {
     private int value = 0;
 //    private int lowAceValue;
-    public final List<Card> cards;
+    private final List<Card> cards;
     private int numAces = 0;
 
 
@@ -38,6 +38,18 @@ public class Hand {
 
     public Card getCard(int index) {
         return this.cards.get(index);
+    }
+
+    public Card removeCard(int index) {
+        return this.cards.remove(index);
+    }
+
+    public boolean removeCard(Card card) {
+        return this.cards.remove(card);
+    }
+
+    public List<Card> getCards() {
+        return this.cards;
     }
 
     private void setValue() {

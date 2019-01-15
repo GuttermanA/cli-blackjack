@@ -10,13 +10,12 @@ import java.util.List;
 public class Player {
 
 
-    public final String name;
-    public HandContainer  hands;
-//    public int cardsValue = 0;
-    public double bet = 0;
-    public double winnings = 0;
-    public boolean busted = false;
-    public boolean blackJack = false;
+    private final String name;
+    private HandContainer  hands;
+    private double bet = 0;
+    private double winnings = 0;
+    private boolean busted = false;
+    private boolean blackJack = false;
 
     public Player() {
         this.name = "The Man with No Name";
@@ -52,7 +51,7 @@ public class Player {
         hands.getCurrentHand().addCard(card);
     }
 
-    public void setBet(double bet) throws BetException {
+    private void setBet(double bet) throws BetException {
         if(bet > this.winnings) {
             throw new BetException("Bet cannot be greater than current winnings");
         } else {
@@ -61,8 +60,40 @@ public class Player {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public double getWinnings() {
+        return winnings;
+    }
+
+    public boolean isBusted() {
+        return busted;
+    }
+
+    public boolean isBlackJack() {
+        return blackJack;
+    }
+
+    public void setBusted(boolean busted) {
+        this.busted = busted;
+    }
+
+    public void setBlackJack(boolean blackJack) {
+        this.blackJack = blackJack;
+    }
+
+    public void setWinnings(double winnings) {
+        this.winnings = winnings;
+    }
+
     public List<Hand> getHands() {
         return this.hands.getHands();
+    }
+
+    public int getNumHands() {
+        return this.hands.getNumHands();
     }
 
     public void setCurrentHand(int index) {
@@ -100,9 +131,9 @@ public class Player {
         }
         Hand originalHand = hands.getCurrentHand();
 //        Card firstCard = originalHand.cards.get(0);
-        Card secondCard = originalHand.cards.get(1);
+        Card secondCard = originalHand.getCard(1);
         Hand newHand = this.hands.addHand(secondCard);
-        originalHand.cards.remove(secondCard);
+        originalHand.removeCard(secondCard);
 
         originalHand.addCard(card1);
         newHand.addCard(card2);

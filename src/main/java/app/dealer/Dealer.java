@@ -8,25 +8,59 @@ import app.player.Player;
 import java.util.List;
 
 public class Dealer {
-    public Hand hand;
+    private Hand hand;
     private Deck deck;
-    public final List<Player> players;
-    public Card upCard;
-    public Card downCard;
-    public boolean busted = false;
-    public boolean blackJack = false;
+    private final List<Player> players;
+    private Card upCard;
+    private Card downCard;
+    private boolean busted;
+    private boolean blackJack;
 
     public Dealer(List<Player> players, int numDecks) {
         this.hand = new Hand();
         this.deck = new Deck(numDecks);
         this.players = players;
+        this.busted = false;
+        this.blackJack = false;
     }
 
     public Dealer(List<Player> players) {
         this.hand = new Hand();
         this.deck = new Deck();
         this.players = players;
+        this.busted = false;
+        this.blackJack = false;
     }
+
+    public Hand getHand() {
+        return this.hand;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Card getUpCard() {
+        return upCard;
+    }
+
+    public Card getDownCard() {
+        return downCard;
+    }
+
+    public boolean isBusted() {
+        return busted;
+    }
+
+    public boolean isBlackJack() {
+        return blackJack;
+    }
+
+
 
     public void reset() {
         this.busted = false;
@@ -43,7 +77,7 @@ public class Dealer {
             }
 
             for(Player player : players) {
-                player.hands.getCurrentHand().addCard(dealFaceUp());
+                player.getCurrentHand().addCard(dealFaceUp());
             }
         }
 
@@ -53,9 +87,7 @@ public class Dealer {
         this.deck = new Deck();
     }
 
-    public List<Card> getHand() {
-        return this.hand.cards;
-    }
+
 
     public int getHandValue() {
         return this.hand.getValue();

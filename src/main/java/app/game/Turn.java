@@ -137,7 +137,7 @@ public class Turn {
 
     public void hit () {
         activePlayer.hit(dealer.dealFaceUp());
-        if(activePlayer.hands.getCurrentHand().getValue() > 21) {
+        if(activePlayer.getCurrentHand().getValue() > 21) {
             activePlayer.printBust();
         } else {
             activePlayer.printHand();
@@ -149,7 +149,7 @@ public class Turn {
     }
 
     public void split() throws HandException, TurnException {
-        if(!activePlayer.hands.getCurrentHand().canSplit()) throw new TurnException("Invalid input because hand cannot be split");
+        if(!activePlayer.getCurrentHand().canSplit()) throw new TurnException("Invalid input because hand cannot be split");
         activePlayer.split(dealer.dealFaceUp(), dealer.dealFaceUp());
     }
 
