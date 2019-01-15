@@ -9,6 +9,7 @@ import java.util.*;
 public class Deck {
 
     public final Deque<Card> cards = new ArrayDeque<>();
+    private int numCards;
 
     public Deck(int numDecks) {
         cards.addAll(generateCards(numDecks));
@@ -16,6 +17,18 @@ public class Deck {
 
     public Deck() {
         cards.addAll(generateCards(1));
+    }
+
+    private void incrementNumCards() {
+        this.numCards++;
+    }
+
+    private void decrementNumCards() {
+        this.numCards--;
+    }
+
+    public int getNumCards() {
+        return this.numCards;
     }
 
     private List<Card> generateCards(int numDecks) {
@@ -27,6 +40,7 @@ public class Deck {
             for (Integer value : Card.values) {
                 for (String suit : Card.suits) {
                     deckArray.add(new Card(value, suit));
+                    incrementNumCards();
                 }
             }
 
@@ -34,12 +48,14 @@ public class Deck {
             for (char type : Card.royals) {
                 for (String suit : Card.suits) {
                     deckArray.add(new Royal(suit, type));
+                    incrementNumCards();
                 }
             }
 
             //Add aces
             for (String suit : Card.suits) {
                 deckArray.add(new Ace(suit));
+                incrementNumCards();
             }
         }
 
@@ -50,6 +66,7 @@ public class Deck {
     }
 
     public Card removeFirst() {
+        decrementNumCards();
         return cards.removeFirst();
     }
 

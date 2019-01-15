@@ -18,7 +18,7 @@ public class Card {
     private final int unicodeSuit;
     private final String suit;
 
-    private boolean hidden = false;
+    private boolean hidden;
 
 
     public Card(int value, String suit) {
@@ -26,6 +26,7 @@ public class Card {
         this.value = value;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
+        this.hidden = false;
     }
 
     public Card(String suit) {
@@ -33,6 +34,7 @@ public class Card {
         this.value = 10;
         this.unicodeSuit = unicodeSuitLookup(suit);
         this.suit = suit;
+        this.hidden = false;
     }
 
 

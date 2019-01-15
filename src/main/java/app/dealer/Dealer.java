@@ -36,6 +36,10 @@ public class Dealer {
         return this.hand;
     }
 
+    public List<Card> getCards() {
+        return this.getHand().getCards();
+    }
+
     public Deck getDeck() {
         return deck;
     }
@@ -56,8 +60,16 @@ public class Dealer {
         return busted;
     }
 
+    public void setBusted(boolean busted) {
+        this.busted = busted;
+    }
+
     public boolean isBlackJack() {
         return blackJack;
+    }
+
+    public void setBlackJack(boolean blackJack) {
+        this.blackJack = blackJack;
     }
 
 
@@ -105,7 +117,7 @@ public class Dealer {
     }
 
     public Card revealDownCard() {
-        Card card = this.hand.getCard(1);
+        Card card = getDownCard();
         card.setHidden(false);
         return card;
     }
