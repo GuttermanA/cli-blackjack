@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Dealer {
     public Hand hand;
-    public final Deck deck;
+    private Deck deck;
     public final List<Player> players;
     public Card upCard;
     public Card downCard;
@@ -47,6 +47,10 @@ public class Dealer {
             }
         }
 
+    }
+
+    public void resetDeck() {
+        this.deck = new Deck();
     }
 
     public List<Card> getHand() {

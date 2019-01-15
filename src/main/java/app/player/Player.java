@@ -4,6 +4,7 @@ import app.card.Card;
 import app.exception.BetException;
 import app.exception.HandException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -82,6 +83,13 @@ public class Player {
 
     public void addCard(Card card) {
         hands.getCurrentHand().addCard(card);
+    }
+
+    public Hand addHand(Card card1, Card card2) {
+        List<Card> newCards = new ArrayList<>();
+        newCards.add(card1);
+        newCards.add(card2);
+        return this.hands.addHand(newCards);
     }
 
     public void split(Card card1, Card card2) {

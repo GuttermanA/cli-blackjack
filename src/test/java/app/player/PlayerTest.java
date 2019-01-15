@@ -1,13 +1,14 @@
 package app.player;
 
 import app.card.Card;
+import app.card.Royal;
 import app.dealer.Dealer;
 import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PlayerTest {
 
@@ -17,10 +18,7 @@ public class PlayerTest {
 
     @BeforeClass
     public static void oneTimeSetUp() throws Exception {
-        players = new ArrayList<>();
-        players.add(new Player());
-        dealer = new Dealer(players);
-        player = players.get(0);
+
     }
 
     @AfterClass
@@ -29,13 +27,20 @@ public class PlayerTest {
 
     @Before
     public void setUp() throws Exception {
+        players = new ArrayList<>();
+        players.add(new Player());
+
+        dealer = new Dealer(players);
+        player = players.get(0);
         dealer.dealOpeningCards();
     }
 
     @After
     public void tearDown() throws Exception {
-        player.reset();
-        dealer.reset();
+//        player.reset();
+//        player.printWinnings();
+//        dealer.reset();
+//        dealer.resetDeck();
     }
 
     @Test
@@ -54,25 +59,25 @@ public class PlayerTest {
         assertTrue(addedToHand);
     }
 
-    @Test
-    public void getHands() {
-    }
-
-    @Test
-    public void setCurrentHand() {
-    }
-
-    @Test
-    public void getCurrentHand() {
-    }
-
-    @Test
-    public void getCurrentHandValue() {
-    }
-
-    @Test
-    public void getBet() {
-    }
+//    @Test
+//    public void getHands() {
+//    }
+//
+//    @Test
+//    public void setCurrentHand() {
+//    }
+//
+//    @Test
+//    public void getCurrentHand() {
+//    }
+//
+//    @Test
+//    public void getCurrentHandValue() {
+//    }
+//
+//    @Test
+//    public void getBet() {
+//    }
 
     @Test
     public void addCard() {
@@ -121,6 +126,17 @@ public class PlayerTest {
 
     @Test
     public void reset() {
+        //resets busted, blackJack, bet, and hands attributes
+        player.busted = true;
+        player.blackJack = true;
+        player.bet = 100;
+
+        player.reset();
+        assertFalse(player.busted);
+        assertFalse(player.blackJack);
+        assertEquals(0, player.bet, .000001);
+        assertEquals(0, player.getCurrentHand().cards.size());
+
     }
 
     @Test
@@ -136,30 +152,74 @@ public class PlayerTest {
 
     @Test
     public void checkBust() {
+//        //sets attribute busted based on current hand value and returns value
+        assertFalse(player.checkBust());
+        assertFalse(player.busted);
+
+        Hand newHand = player.addHand(new Royal("SPADES", 'Q'), new Royal("SPADES", 'Q'));
+        newHand.addCard(new Royal("SPADES", 'Q'));
+        player.setCurrentHand(1);
+        assertTrue(player.checkBust());
+        assertTrue(player.busted);
     }
 
     @Test
     public void placeBet() {
+        //sets bet attribute to given bet value and subtracts from winnings
+
+        double bet = 1;
+        double initialWinnings = player.winnings;
+        player.placeBet(1);
+
+        assertEquals(1, player.getBet(), .00001);
+        assertEquals(player.winnings, initialWinnings - bet, .00001);
+
     }
 
     @Test
     public void push() {
+        player.printWinnings();
+        //increases winnings by bet
+        double initialWinnings = player.winnings;
+        player.placeBet(1);
+        player.push();
+        double newWinnings = player.winnings;
+
+        assertEquals(initialWinnings, newWinnings, .0001);
     }
 
     @Test
     public void win() {
+        //increases winnings by bet * 2
+        double initialWinnings = player.winnings;
+        player.placeBet(1);
+        player.win();
+        double newWinnings = player.winnings;
+
+        assertEquals(initialWinnings + player.getBet(), newWinnings, .0001);
     }
 
     @Test
     public void blackJackWin() {
+        //incraseas winnings by bet * 2.5
+        double initialWinnings = player.winnings;
+        player.placeBet(1);
+        player.blackJackWin();
+        double newWinnings = player.winnings;
+
+        assertEquals(initialWinnings + player.getBet() * 1.5, newWinnings, .0001);
     }
 
     @Test
     public void lose() {
-    }
+        //decrease winnings by bet
+        double initialWinnings = player.winnings;
+        player.placeBet(1);
 
-    @Test
-    public void printZeroWinningsLoss() {
+        player.lose();
+        double newWinnings = player.winnings;
+
+        assertEquals(initialWinnings - player.getBet(), newWinnings , .0001);
     }
 
     @Test

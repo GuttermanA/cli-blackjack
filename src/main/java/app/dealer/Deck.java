@@ -31,7 +31,7 @@ public class Deck {
             }
 
             //Add royal cards
-            for (String type : Card.royals) {
+            for (char type : Card.royals) {
                 for (String suit : Card.suits) {
                     deckArray.add(new Royal(suit, type));
                 }

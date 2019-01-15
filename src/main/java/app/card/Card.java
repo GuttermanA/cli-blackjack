@@ -7,7 +7,7 @@ public class Card {
     public static final String[] suits = {"SPADES","HEARTS", "DIAMONDS", "CLUBS"};
     public static final int unicodeCardBack = 0x1F0A0;
 
-    public static final String[] royals = {"J", "Q","K"};
+    public static final char[] royals = {'J', 'Q','K'};
 
     public final int value;
 
