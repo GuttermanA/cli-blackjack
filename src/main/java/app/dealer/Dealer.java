@@ -83,16 +83,20 @@ public class Dealer {
     public void dealOpeningCards() {
         for(int i= 0; i < 2; i++) {
             if(i == 0 ) {
-                this.upCard = this.hand.addCard(dealFaceUp());
+                this.upCard = this.addCard(dealFaceUp());
             } else {
-                this.downCard = this.hand.addCard(dealFaceDown());
+                this.downCard = this.addCard(dealFaceDown());
             }
 
             for(Player player : players) {
-                player.getCurrentHand().addCard(dealFaceUp());
+                player.addCard(this.dealFaceUp());
             }
         }
 
+    }
+
+    public Card addCard(Card card) {
+        return this.getHand().addCard(card);
     }
 
     public void resetDeck() {
@@ -143,7 +147,7 @@ public class Dealer {
         }
 
         while(this.hand.getValue() <=16) {
-            this.hand.addCard(dealFaceUp());
+            this.addCard(dealFaceUp());
             printHand();
         }
 

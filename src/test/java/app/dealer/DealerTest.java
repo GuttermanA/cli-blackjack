@@ -1,6 +1,8 @@
 package app.dealer;
 
+import app.card.Ace;
 import app.card.Card;
+import app.card.Royal;
 import app.player.Hand;
 import app.player.Player;
 import org.junit.*;
@@ -90,9 +92,6 @@ public class DealerTest {
 
     }
 
-    @Test
-    public void resetDeck() {
-    }
 
     @Test
     public void dealFaceUp() {
@@ -125,18 +124,43 @@ public class DealerTest {
 
     @Test
     public void revealDownCard() {
-    }
+        dealer.dealOpeningCards();
 
-    @Test
-    public void checkHiddenBlackjack() {
-        //returns true if blackjack
+        assertTrue(dealer.getDownCard().isHidden());
+        dealer.revealDownCard();
+
+        assertFalse(dealer.getDownCard().isHidden());
     }
 
     @Test
     public void play() {
+        //Plays until dealer busts, hits a soft 17, or has a blackjack.
+
+        for(int i = 0; i < 5; i++) {
+            dealer.dealOpeningCards();
+            dealer.play();
+
+            assertTrue(dealer.isBlackJack() || dealer.isBusted() || dealer.getHandValue() >= 17);
+
+            dealer.reset();
+        }
     }
 
     @Test
     public void checkBlackJack() {
+        //returns true if blackjack
+
+        dealer.addCard(new Ace("SPADES"));
+        dealer.addCard(new Royal("SPADES", 'Q'));
+
+        assertTrue(dealer.checkBlackJack());
+
+        dealer.reset();
+
+        dealer.addCard(new Card(2, "SPADES" ));
+        dealer.addCard(new Card(2, "SPADES" ));
+
+        assertFalse(dealer.checkBlackJack());
+
     }
 }
