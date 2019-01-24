@@ -62,29 +62,6 @@ public class Turn {
                 ex.printStackTrace();
             }
         }
-
-//        while(activePlayer.getHands().size() > currentHandIndex) {
-//            activePlayer.setCurrentHand(currentHandIndex);
-//            if(this.activePlayer.checkBlackJack()) {
-//                activePlayer.printBlackJack();
-//                return;
-//            }
-//            try {
-//                playerAct();
-//            } catch (TurnException ex) {
-//                ex.printStackTrace();
-//            }
-//            currentHandIndex++;
-//
-//        }
-
-
-
-//        try {
-//                playerAct();
-//            } catch (TurnException ex) {
-//                ex.printStackTrace();
-//            }
     }
 
 
@@ -97,14 +74,7 @@ public class Turn {
     public void playerAct() throws TurnException, HandException {
 
         //Validation is not required on below logic because check input handles if its valid for the given hand
-
-//        System.out.println("INSIDE PLAYER ACT");
-
         if(activePlayer.checkBlackJack()) return;
-
-//        printActionMessage();
-
-//        this.inputNextLine = this.playerInput.nextLine();
 
         this.checkInput();
 
@@ -114,7 +84,6 @@ public class Turn {
             if (activePlayer.checkBust()) return;
             printActionMessage();
             System.out.println("------------------------------------");
-//            inputNextLine = this.playerInput.nextLine();
             this.checkInput();
         }
 

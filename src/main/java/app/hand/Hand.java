@@ -59,9 +59,9 @@ public class Hand {
                 this.addAce();
                 Ace ace = (Ace) card;
                 if(this.value + ace.getHighValue() > 21) {
-                    this.value += 1;
+                    this.value += ace.getLowValue();
                 } else {
-                    this.value += 11;
+                    this.value += ace.getHighValue();
                 }
             } else {
                 this.value += card.value;

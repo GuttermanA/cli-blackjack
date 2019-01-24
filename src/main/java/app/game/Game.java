@@ -57,14 +57,10 @@ public class Game {
         System.out.println(welcomeMessage());
         System.out.println("------------------------------------");
 
-
-
         this.addPlayer(sc.nextLine());
 
         System.out.println(continueMessage());
         System.out.println("------------------------------------");
-
-//        String nextLine = sc.nextLine();
 
         while (!sc.nextLine().equalsIgnoreCase("q") && this.players.size() > 0) {
 
@@ -84,13 +80,10 @@ public class Game {
                 results();
             }
 
-
-
             dealer.reset();
 
             System.out.println(continueMessage());
             System.out.println("------------------------------------");
-//            nextLine = sc.nextLine();
         }
 
         end();

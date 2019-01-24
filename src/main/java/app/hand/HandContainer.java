@@ -27,9 +27,6 @@ public class HandContainer {
         return this.hands.get(currentHand);
     }
 
-//    public HandContainer(Card card) {
-//        this.hands.add(new Hand(card));
-//    }
 
     public Hand addHand(List<Card> cards) {
         this.numHands++;

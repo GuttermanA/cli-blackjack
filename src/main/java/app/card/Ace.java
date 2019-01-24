@@ -11,9 +11,6 @@ public class Ace extends Royal {
         return this.value[1];
     }
 
-
-    
-
     public int getLowValue() {
         return this.value[0];
     }

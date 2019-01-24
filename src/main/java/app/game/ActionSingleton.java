@@ -11,15 +11,6 @@ public class ActionSingleton {
 
     private static ActionSingleton instance = null;
 
-//    public static final String[] actions = { "h", "st", "sp", "d"};
-//    public static final String actionMessaage = "Please stand, hit, or double:";
-//    public static final String splitActionMessage = "Please stand, hit, split, or double:";
-//    public static final String hitOrStandMessage = "Please stand or hit";
-
-//    private Scanner playerAction;
-
-    public String lastAction;
-
     public Map<Integer, HashMap<String, Object>> actionMap;
 
     private ActionSingleton() {
