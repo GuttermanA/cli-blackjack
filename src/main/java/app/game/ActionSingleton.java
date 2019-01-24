@@ -1,7 +1,7 @@
 package app.game;
 
 import app.exception.HandException;
-import app.player.Hand;
+import app.hand.Hand;
 
 import java.util.Arrays;
 import java.util.HashMap;

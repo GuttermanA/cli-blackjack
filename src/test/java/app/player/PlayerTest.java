@@ -3,6 +3,7 @@ package app.player;
 import app.card.Card;
 import app.card.Royal;
 import app.dealer.Dealer;
+import app.hand.Hand;
 import org.junit.*;
 
 import java.util.ArrayList;

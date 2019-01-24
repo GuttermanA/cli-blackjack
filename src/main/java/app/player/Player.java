@@ -3,6 +3,8 @@ package app.player;
 import app.card.Card;
 import app.exception.BetException;
 import app.exception.HandException;
+import app.hand.Hand;
+import app.hand.HandContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Player {
 
 
     private final String name;
-    private HandContainer  hands;
+    private HandContainer hands;
     private double bet = 0;
     private double winnings = 0;
     private boolean busted = false;

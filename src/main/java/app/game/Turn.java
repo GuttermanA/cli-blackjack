@@ -2,7 +2,7 @@ package app.game;
 
 import app.dealer.Dealer;
 import app.exception.HandException;
-import app.player.Hand;
+import app.hand.Hand;
 import app.player.Player;
 
 import java.util.Scanner;

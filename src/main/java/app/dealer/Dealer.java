@@ -2,7 +2,7 @@ package app.dealer;
 
 import app.card.Ace;
 import app.card.Card;
-import app.player.Hand;
+import app.hand.Hand;
 import app.player.Player;
 
 import java.util.List;

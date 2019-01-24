@@ -3,7 +3,7 @@ package app.dealer;
 import app.card.Ace;
 import app.card.Card;
 import app.card.Royal;
-import app.player.Hand;
+import app.hand.Hand;
 import app.player.Player;
 import org.junit.*;
 

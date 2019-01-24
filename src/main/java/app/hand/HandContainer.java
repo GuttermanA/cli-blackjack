@@ -1,6 +1,7 @@
-package app.player;
+package app.hand;
 
 import app.card.Card;
+import app.hand.Hand;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package app.player;
+package app.hand;
 
 import app.card.Ace;
 import app.card.Card;
