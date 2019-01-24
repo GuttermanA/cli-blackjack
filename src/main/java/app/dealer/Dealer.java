@@ -6,6 +6,7 @@ import app.hand.Hand;
 import app.player.Player;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Dealer {
     private Hand hand;
@@ -168,6 +169,12 @@ public class Dealer {
     public void printHand() {
         System.out.println( System.lineSeparator() + "The dealers hand is: ");
         System.out.println(this.toString());
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch(InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     public void printStand() {

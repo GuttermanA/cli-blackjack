@@ -8,6 +8,7 @@ import app.hand.HandContainer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Player {
 
@@ -208,6 +209,11 @@ public class Player {
 
     public void printHand() {
         System.out.println(this.name + " has:" + System.lineSeparator() + this.toString() + System.lineSeparator());
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch(InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void printBet() {

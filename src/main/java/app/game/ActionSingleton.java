@@ -27,15 +27,15 @@ public class ActionSingleton {
         actionMap.put(0, new HashMap<>());
         Map hitOrStand = actionMap.get(0);
         hitOrStand.put("actions", new String[] {"h", "st"});
-        hitOrStand.put("message", "Please hit or stand");
+        hitOrStand.put("message", "Please hit(h) or stand(st)");
         actionMap.put(1, new HashMap<>());
         Map hitStandOrDouble = actionMap.get(1);
         hitStandOrDouble.put("actions", new String[] {"h", "st", "d"});
-        hitStandOrDouble.put("message", "Please hit, stand, or double");
+        hitStandOrDouble.put("message", "Please hit(h), stand(st), or double(d)");
         actionMap.put(2, new HashMap<>());
         Map hitStandDoubleOrSplit = actionMap.get(2);
         hitStandDoubleOrSplit.put("actions", new String[] {"h", "st", "d", "sp"});
-        hitStandDoubleOrSplit.put("message", "Please hit, stand, double, or split");
+        hitStandDoubleOrSplit.put("message", "Please hit(h), stand(st), double(d), or split(sp)");
     }
 
     public static ActionSingleton getInstance() {

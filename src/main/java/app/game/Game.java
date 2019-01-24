@@ -55,7 +55,7 @@ public class Game {
     public void start() throws HandException {
 
         System.out.println(welcomeMessage());
-//        System.out.println("------------------------------------");
+        System.out.println("------------------------------------");
 
 
 
@@ -110,6 +110,7 @@ public class Game {
             Player currentPlayer = players.get(i);
             currentPlayer.printWinnings();
             printPlaceBets();
+            System.out.println("------------------------------------");
             while(true) {
                 double bet = validateBet();
                     currentPlayer.placeBet(bet);

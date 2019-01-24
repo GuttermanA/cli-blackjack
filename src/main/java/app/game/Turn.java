@@ -98,7 +98,7 @@ public class Turn {
 
         //Validation is not required on below logic because check input handles if its valid for the given hand
 
-        System.out.println("INSIDE PLAYER ACT");
+//        System.out.println("INSIDE PLAYER ACT");
 
         if(activePlayer.checkBlackJack()) return;
 
@@ -113,6 +113,7 @@ public class Turn {
 
             if (activePlayer.checkBust()) return;
             printActionMessage();
+            System.out.println("------------------------------------");
 //            inputNextLine = this.playerInput.nextLine();
             this.checkInput();
         }
@@ -163,6 +164,7 @@ public class Turn {
         inputNextLine = this.playerInput.nextLine();
         while(ACTION_SET.checkInput(inputNextLine, activePlayer.getCurrentHand())) {
             printActionMessage();
+            System.out.println("------------------------------------");
             inputNextLine = this.playerInput.nextLine();
         }
     }
