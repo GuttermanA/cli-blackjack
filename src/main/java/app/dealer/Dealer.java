@@ -159,7 +159,7 @@ public class Dealer {
             printStand();
         }
 
-        System.out.println("DEALER FINISHED");
+//        System.out.println("DEALER FINISHED");
     }
 
     public boolean checkBlackJack() {

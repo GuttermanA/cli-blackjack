@@ -1,6 +1,7 @@
 package app.game;
 
 import app.dealer.Dealer;
+import app.exception.BetException;
 import app.exception.HandException;
 import app.player.Player;
 
@@ -103,24 +104,26 @@ public class Game {
             Player currentPlayer = players.get(i);
             currentPlayer.printWinnings();
             printPlaceBets();
-            System.out.println("------------------------------------");
-            while(true) {
-                double bet = validateBet();
-                    currentPlayer.placeBet(bet);
-                    return;
-            }
+
+            validateBet(currentPlayer);
 
         }
     }
 
-    public double validateBet() {
+    public double validateBet(Player currentPlayer) {
         while(true) {
             try {
                 double bet = sc.nextDouble();
+                currentPlayer.placeBet(bet);
                 return bet;
             } catch (java.util.InputMismatchException e) {
-                sc.next();
+                System.out.println("Bet must be numeric");
                 printBetMessage();
+                sc.next();
+            } catch (BetException e) {
+                System.out.println(e.getMessage());
+                printBetMessage();
+                sc.nextLine();
             }
         }
     }
@@ -178,10 +181,12 @@ public class Game {
 
     public void printPlaceBets() {
         System.out.println("Please place bets:");
+        System.out.println("------------------------------------");
     }
 
     public void printBetMessage() {
         System.out.println("Please enter a valid bet:");
+        System.out.println("------------------------------------");
     }
 
 

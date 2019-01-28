@@ -163,12 +163,9 @@ public class Player {
         return this.busted;
     }
 
-    public void placeBet(double bet) {
-        try {
+    public void placeBet(double bet) throws BetException {
             this.setBet(bet);
-        } catch (BetException e) {
-            e.printStackTrace();
-        }
+
 
         printBet();
     }
