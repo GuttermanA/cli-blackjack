@@ -13,8 +13,11 @@ Game rules:
 
 ## Demo
 
-Coming soon
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=DBZ9aL4lTBM
+" target="_blank"><img src="http://img.youtube.com/vi/DBZ9aL4lTBM/0.jpg" 
+alt="CLI Blackjack" width="240" height="180" border="10" /></a>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DBZ9aL4lTBM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ## Download
 
 You can download the executable jar [here](https://drive.google.com/file/d/1SWJ75tJ2bKBhR7TAchzAj6Wuhc9jP6Dd/view?usp=sharing). You must have JVM 1.8 installed. To run, extract zip file, open your favorite terminal app and navigate to the lib directory of the extracted files.
