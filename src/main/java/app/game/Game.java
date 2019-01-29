@@ -28,8 +28,14 @@ public class Game {
         this.dealer = new Dealer(players);
     }
 
+    public Game(Player player) {
+        this.players = new ArrayList<>();
+        this.players.add(player);
+        this.dealer = new Dealer(this.players);
+    }
+
     public Game() {
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
 //        players.add(new Player());
         this.dealer = new Dealer(this.players);
     }
@@ -91,6 +97,7 @@ public class Game {
     }
 
     public boolean checkWin(int player) {
+
         return players.get(player).getCurrentHandValue() > dealer.getHandValue();
     }
 

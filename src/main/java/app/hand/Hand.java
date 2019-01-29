@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Hand {
     private int value = 0;
-//    private int lowAceValue;
+    private int lowAceValue = 0;
     private final List<Card> cards;
     private int numAces = 0;
 
@@ -58,11 +58,13 @@ public class Hand {
             if(card instanceof Ace) {
                 this.addAce();
                 Ace ace = (Ace) card;
-                if(this.value + ace.getHighValue() > 21) {
-                    this.value += ace.getLowValue();
-                } else {
-                    this.value += ace.getHighValue();
-                }
+                this.lowAceValue = ace.getLowValue() + this.value;
+                this.value += ace.getHighValue();
+//                if(this.value + ace.getHighValue() > 21) {
+//                    this.value += ace.getLowValue();
+//                } else {
+//                    this.value += ace.getHighValue();
+//                }
             } else {
                 this.value += card.value;
             }
@@ -71,7 +73,7 @@ public class Hand {
     }
 
     public int getValue() {
-        return this.value;
+        return this.value > 21 ? this.getLowAceValue() : this.value;
     }
 
     public int getNumAces() {
@@ -82,8 +84,9 @@ public class Hand {
         this.numAces++;
     }
 
-    public int getLowAceValue() {
-        return this.value - (10 * numAces);
+    private int getLowAceValue() {
+        return this.lowAceValue;
+//        return this.value - (10 * numAces);
     }
 
     public boolean checkBlackJack() {
@@ -91,7 +94,8 @@ public class Hand {
     }
 
     public boolean checkBust() {
-        return this.value > 21;
+
+        return this.getValue() > 21;
     }
 
     public int numCards() {
@@ -112,8 +116,12 @@ public class Hand {
         return cards.get(0).equals(cards.get(1));
     }
 
-    public String withAceMessage() {
+    public String withSoftAceMessage() {
         return "The value of the hand is " + this.getLowAceValue() + " or " + this.getValue() + ".";
+    }
+
+    public String withHardAceMessage() {
+        return "The value of the hand is" + this.getLowAceValue() + ".";
     }
 
     public String withoutAceMessage() {
@@ -136,7 +144,12 @@ public class Hand {
         if (isCardHidden()) {
             sb.append(this.hiddenCardMessage());
         } else if(this.getNumAces() > 0) {
-            sb.append(this.withAceMessage());
+            if(this.getValue() > 21) {
+                sb.append(this.withHardAceMessage());
+            } else {
+                sb.append(this.withSoftAceMessage());
+            }
+
         } else {
             sb.append(this.withoutAceMessage());
         }

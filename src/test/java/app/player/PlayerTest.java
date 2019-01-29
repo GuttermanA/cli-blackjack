@@ -3,6 +3,7 @@ package app.player;
 import app.card.Card;
 import app.card.Royal;
 import app.dealer.Dealer;
+import app.exception.BetException;
 import app.hand.Hand;
 import org.junit.*;
 
@@ -126,7 +127,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void reset() {
+    public void reset() throws BetException  {
         //resets busted, blackJack, bet, and hands attributes
         player.setBusted(true);
         player.setBlackJack(true);
@@ -165,7 +166,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void placeBet() {
+    public void placeBet() throws BetException  {
         //sets bet attribute to given bet value and subtracts from winnings
 
         double bet = 1;
@@ -178,7 +179,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void push() {
+    public void push() throws BetException  {
         player.printWinnings();
         //increases winnings by bet
         double initialWinnings = player.getWinnings();
@@ -190,7 +191,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void win() {
+    public void win() throws BetException  {
         //increases winnings by bet * 2
         double initialWinnings = player.getWinnings();
         player.placeBet(1);
@@ -201,7 +202,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void blackJackWin() {
+    public void blackJackWin() throws BetException {
         //incraseas winnings by bet * 2.5
         double initialWinnings = player.getWinnings();
         player.placeBet(1);
@@ -212,7 +213,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void lose() {
+    public void lose() throws BetException  {
         //decrease winnings by bet
         double initialWinnings = player.getWinnings();
         player.placeBet(1);

@@ -107,6 +107,7 @@ public class Dealer {
 
 
     public int getHandValue() {
+
         return this.hand.getValue();
     }
 
