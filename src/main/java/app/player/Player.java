@@ -194,8 +194,8 @@ public class Player {
     }
 
     public void doubleDown(Card card) {
-        this.bet *= 2;
         this.winnings -= this.bet;
+        this.bet += this.bet;
         addCard(card);
         printDouble();
     }

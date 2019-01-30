@@ -65,9 +65,13 @@ public class GameTest {
         dealer.addCard(new Royal("SPADES", 'Q'));
         dealer.addCard(new Card(7, "SPADES"));
 
+        System.out.println("Adding player cards");
+
         player.addCard(new Card(7, "SPADES"));
         player.addCard(new Ace("SPADES"));
         player.addCard(new Ace("SPADES"));
+
+        System.out.println(player.getCurrentHandValue());
 
         assertTrue(game.checkWin(0));
         assertFalse(player.isBusted());

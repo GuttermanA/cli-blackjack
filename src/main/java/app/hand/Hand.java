@@ -10,6 +10,7 @@ import java.util.List;
 public class Hand {
     private int value = 0;
     private int lowAceValue = 0;
+    private int highAceValue = 0;
     private final List<Card> cards;
     private int numAces = 0;
 
@@ -52,29 +53,41 @@ public class Hand {
         return this.cards;
     }
 
-    private void setValue() {
+    private void resetValues() {
         this.value = 0;
+        this.lowAceValue = 0;
+        this.highAceValue = 0;
+        this.numAces = 0;
+    }
+
+    private void setValue() {
+        resetValues();
         for(Card card : this.cards) {
             if(card instanceof Ace) {
-                this.addAce();
                 Ace ace = (Ace) card;
-                this.lowAceValue = ace.getLowValue() + this.value;
-                this.value += ace.getHighValue();
-//                if(this.value + ace.getHighValue() > 21) {
-//                    this.value += ace.getLowValue();
-//                } else {
-//                    this.value += ace.getHighValue();
-//                }
+                if(numAces == 0) {
+                    this.highAceValue += ace.getHighValue();
+                } else {
+                    this.highAceValue += ace.getLowValue();
+                }
+                this.lowAceValue += ace.getLowValue();
+                this.addAce();
             } else {
                 this.value += card.value;
+                this.lowAceValue += card.value;
+                this.highAceValue += card.value;
             }
-
         }
     }
 
     public int getValue() {
-        return this.value > 21 ? this.getLowAceValue() : this.value;
+        if(this.numAces > 0) {
+            return this.getHighAceValue() > 21 ? this.getLowAceValue() : this.getHighAceValue();
+        } else {
+            return this.value;
+        }
     }
+
 
     public int getNumAces() {
         return this.numAces;
@@ -84,17 +97,19 @@ public class Hand {
         this.numAces++;
     }
 
-    private int getLowAceValue() {
+    protected int getLowAceValue() {
         return this.lowAceValue;
-//        return this.value - (10 * numAces);
+    }
+
+    protected int getHighAceValue() {
+        return this.highAceValue;
     }
 
     public boolean checkBlackJack() {
-        return this.value == 21 && this.cards.size() == 2;
+        return this.getValue() == 21 && this.numCards() == 2;
     }
 
     public boolean checkBust() {
-
         return this.getValue() > 21;
     }
 
@@ -113,19 +128,19 @@ public class Hand {
     public boolean canSplit() throws HandException {
         if(cards.size() > 2) throw new HandException("Split can only occur when 2 cards are in hand");
 
-        return cards.get(0).equals(cards.get(1));
+        return cards.get(0).canSplit(cards.get(1));
     }
 
     public String withSoftAceMessage() {
-        return "The value of the hand is " + this.getLowAceValue() + " or " + this.getValue() + ".";
+        return "The value of the hand is " + this.getLowAceValue() + " or " + this.getHighAceValue() + ".";
     }
 
     public String withHardAceMessage() {
-        return "The value of the hand is" + this.getLowAceValue() + ".";
+        return "The value of the hand is " + this.getLowAceValue() + ".";
     }
 
     public String withoutAceMessage() {
-        return "The value of the hand is " + this.getValue() + ".";
+        return "The value of the hand is " + this.getValue() + "." ;
     }
 
     public String hiddenCardMessage() {
@@ -144,7 +159,7 @@ public class Hand {
         if (isCardHidden()) {
             sb.append(this.hiddenCardMessage());
         } else if(this.getNumAces() > 0) {
-            if(this.getValue() > 21) {
+            if(this.getHighAceValue() > 21) {
                 sb.append(this.withHardAceMessage());
             } else {
                 sb.append(this.withSoftAceMessage());
