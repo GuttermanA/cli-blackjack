@@ -13,8 +13,8 @@ Game rules:
 
 ## Demo
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=DBZ9aL4lTBM
-" target="_blank"><img src="http://img.youtube.com/vi/DBZ9aL4lTBM/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=_B677hkszeM
+" target="_blank"><img src="http://img.youtube.com/vi/_B677hkszeM/0.jpg" 
 alt="CLI Blackjack" width="240" height="180" border="10" /></a>
 
 ## Download
